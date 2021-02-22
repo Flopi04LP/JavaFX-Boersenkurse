@@ -14,4 +14,4 @@ Missing featuress:
  
 ----
 Status:
--in development
+- in development
