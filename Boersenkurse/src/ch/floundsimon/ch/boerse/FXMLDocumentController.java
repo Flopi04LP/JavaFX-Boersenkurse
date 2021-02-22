@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.floundsimon.ch.boerse;
 
 import java.net.URL;
@@ -24,7 +19,7 @@ import javafx.scene.control.Label;
  * @author flori
  */
 public class FXMLDocumentController implements Initializable {
-    
+
     private Label label;
     @FXML
     private LineChart<String, Number> chart;
@@ -40,50 +35,66 @@ public class FXMLDocumentController implements Initializable {
     private Button btndogecoin;
     @FXML
     private Button btnstocks;
+
+    Integer bitcoinVals[] = new Integer[10];
+    Integer etherumVals[] = new Integer[10];
+    Integer dogecoinVals[] = new Integer[10];
     
-    
-    
-        
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
-        
-    }    
+        start();
+    }
 
     @FXML
     private void btnclickbitcoin(ActionEvent event) {
-        
-        XYChart.Series<String, Number> databit = new XYChart.Series<>();   
-        databit.getData().removeAll(Collections.singleton(chart.getData().setAll()));
-        databit.getData().add(new XYChart.Data<>("1995", 180000));
-        databit.getData().add(new XYChart.Data<>("1996", 190000));
-        databit.getData().add(new XYChart.Data<>("1997", 240000));
-        databit.getData().add(new XYChart.Data<>("1998", 230000));
-        
-        chart.getData().add(databit);
+        start();
+
     }
 
     @FXML
     private void btnclickethereum(ActionEvent event) {
-        XYChart.Series<String, Number> data = new XYChart.Series<>(); 
-        
+        XYChart.Series<String, Number> data = new XYChart.Series<>();
+
         data.getData().removeAll(Collections.singleton(chart.getData().setAll()));
-               
+
         data.getData().add(new XYChart.Data<>("1995", 18000));
         data.getData().add(new XYChart.Data<>("1996", 19000));
         data.getData().add(new XYChart.Data<>("1997", 24000));
         data.getData().add(new XYChart.Data<>("1998", -23));
-        
+
         chart.getData().add(data);
+        chart.setTitle("ETHERUM");
     }
 
     @FXML
     private void btnclickdogecoin(ActionEvent event) {
+        XYChart.Series<String, Number> data = new XYChart.Series<>();
+
+        data.getData().removeAll(Collections.singleton(chart.getData().setAll()));
+
+        data.getData().add(new XYChart.Data<>("1995", 14000));
+        data.getData().add(new XYChart.Data<>("1996", 1000));
+        data.getData().add(new XYChart.Data<>("1997", 26000));
+        data.getData().add(new XYChart.Data<>("1998", 5554));
+
+        chart.getData().add(data);
+        chart.setTitle("DOGECOIN");
     }
 
     @FXML
     private void btnclickstocks(ActionEvent event) {
     }
-    
+
+    public void start() {
+        XYChart.Series<String, Number> databit = new XYChart.Series<>();
+        databit.getData().removeAll(Collections.singleton(chart.getData().setAll()));
+        databit.getData().add(new XYChart.Data<>("1995", 180000));
+        databit.getData().add(new XYChart.Data<>("1996", 190000));
+        databit.getData().add(new XYChart.Data<>("1997", 240000));
+        databit.getData().add(new XYChart.Data<>("1998", 230000));
+
+        chart.getData().add(databit);
+        chart.setTitle("BITCOIN");
+    }
 }
+
