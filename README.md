@@ -12,3 +12,6 @@ Bugs:
 Missing featuress:
 - Graphs only displaying random Data, not actual values
  
+----
+Status:
+-in development
