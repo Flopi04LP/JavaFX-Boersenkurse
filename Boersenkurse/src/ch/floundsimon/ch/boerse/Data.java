@@ -21,7 +21,7 @@ import org.apache.hc.core5.net.URIBuilder;
 
 public class Data {
 
-    private static String apiKey = "1e826734-1cd7-4375-a011-bf9d6f42c565";
+    private static String apiKey = "LMAO NOT GIVING U MY PRIVATE KEY FUCKERS";
 
     public void getData() {
 
