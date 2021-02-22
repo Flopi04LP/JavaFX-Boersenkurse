@@ -7,4 +7,8 @@ Hi Simon!
 ---------------------------------------------------------------------------
 Bugs:
 
--Bitcoin button strange when clicked other buttons light grey. Bitcoin button not.
+- none
+                               
+Missing featuress:
+- Graphs only displaying random Data, not actual values
+ 
