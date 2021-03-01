@@ -62,6 +62,8 @@ public class FXMLDocumentController implements Initializable {
     private ImageView up;
     @FXML
     private ImageView down;
+    @FXML
+    private Label price;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,72 +74,65 @@ public class FXMLDocumentController implements Initializable {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    private void btnclickbitcoin(ActionEvent event) throws IOException, FileNotFoundException, ParseException {
+    private void btnclickbitcoin(ActionEvent event) throws Exception {
         start();
 
     }
 
     @FXML
-    private void btnclickethereum(ActionEvent event) throws IOException, FileNotFoundException, ParseException {
+    private void btnclickethereum(ActionEvent event) throws Exception {
 
         klicked(ETHEREUM);
     }
 
     @FXML
-    private void btnclickdogecoin(ActionEvent event) throws IOException, FileNotFoundException, ParseException {
+    private void btnclickdogecoin(ActionEvent event) throws Exception {
         klicked(DOGECOIN);
     }
 
     @FXML
-    private void btnclickstocks(ActionEvent event) throws URISyntaxException, IOException, org.apache.hc.core5.http.ParseException, ParseException {
+    private void btnclickstocks(ActionEvent event) throws Exception {
 
         stocks();
 
     }
 
-    public void start() throws IOException, FileNotFoundException, ParseException {
+    public void start() throws Exception {
         klicked(BITCOIN);
     }
 
-    private void klicked(Coins coin) throws IOException, FileNotFoundException, ParseException {
+    public void klicked(Coins coin) throws IOException, FileNotFoundException, ParseException, Exception {
         chart.setVisible(true);
         XYChart.Series<String, Number> databit = new XYChart.Series<>();
         databit.getData().removeAll(Collections.singleton(chart.getData().setAll()));
-        Data data = new Data();
-        int vals[] = new int[10];
+        Double vals[] = new Double[6];
+        Double[] array = CryptoData.getFiveDays(coin);
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 5; i++) {
+            Double val = array[i];
+            databit.getData().add(new XYChart.Data<>(String.valueOf(i), val));
+            vals[i] = val;
+
             /*
-            switch (coin) {
-                case "BITCOIN":
-                    databit.getData().add(new XYChart.Data<>(String.valueOf(i), (int)data.getBtc()));
-                    vals[i] = (int) data.getBtc();
-                    break;
-                case "ETHEREUM":
-                    databit.getData().add(new XYChart.Data<>(String.valueOf(i), (int)data.getEth()));
-                    vals[i] = (int) data.getEth();
-                    break;
-                case "DOGECOIN":
-                    databit.getData().add(new XYChart.Data<>(String.valueOf(i), (int)data.getDoge()));
-                    vals[i] = (int) data.getDoge();
-                    break;
-                    
-            }
-             */
-
             Random r = new Random();
             int rnd = r.nextInt(10) + 50;
             databit.getData().add(new XYChart.Data<>(String.valueOf(i), rnd));
             vals[i] = rnd;
-
+             */
         }
 
-        // System.out.println(vals[5] + "  "+ vals[6]);
-        gainsPerc = Double.valueOf(df.format(calcPerc(vals[6], vals[5])));
+        Double latest = CryptoData.getCoin(coin);
+        databit.getData().add(new XYChart.Data<>(String.valueOf(6), latest));
+        vals[5] = latest;
+        price.setText(String.valueOf(latest)+" USD");
+        
+        gainsPerc = Double.valueOf(df.format(calcPerc(vals[5], vals[4])));
 
         if (gainsPerc > 0) {
             gains.setText(String.valueOf("+ " + gainsPerc + "%"));
