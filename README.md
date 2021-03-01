@@ -1,16 +1,16 @@
 # JavaFX-Boersenkurse / JavaFX-stock market prices
 
-This is a Java-FX program that should display the current prices of the most common cryptocurrencies. That's not all tho.
-We want to show the stocks also. 
+This is a Java-FX program that displays the current price of various Cryptocurrencies, their price change over the last week and a Browser for Stocks, where you can look up basic Data of a Stock. No fundamentals or anything fancy tho.
+Still really cool  : )
 
 
 ---------------------------------------------------------------------------
-Bugs:
-
+Major Bugs:           
 - none
                                
-Missing featuress:
-- Graphs only displaying random Data, not actual values
+Missing featuress:                      
+- News
+- Live-Ticker thingy
  
 ----
 Status:
