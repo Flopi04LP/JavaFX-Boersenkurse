@@ -166,7 +166,7 @@ public class Data {
         return getPriceChange(coin);
     }
 
-    public Double getStock(String stock)
+    public static Double getStock(String stock)
             throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
 
         String uri = "https://finnhub.io/api/v1/quote?symbol=" + stock + "&token=sandbox_c0u914748v6qqphtv320";
@@ -199,11 +199,10 @@ public class Data {
             response.close();
         }
 
-        System.out.println("Price " + stock + ":  " + writeStockJson());
         return writeStockJson();
     }
 
-    private Double writeStockJson() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
+    private static Double writeStockJson() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(new FileReader("stock.json"));
         Object a = object.get("c");

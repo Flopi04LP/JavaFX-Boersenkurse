@@ -25,6 +25,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.json.simple.parser.ParseException;
@@ -33,16 +34,11 @@ import org.json.simple.parser.ParseException;
  *
  * @author flori
  */
-public class FXMLDocumentController implements Initializable {
+public class Stockscontroller implements Initializable {
 
     DecimalFormat df = new DecimalFormat("0.00");
     private Label label;
-    @FXML
     private LineChart<String, Number> chart;
-    @FXML
-    private NumberAxis y;
-    @FXML
-    private CategoryAxis x;
     @FXML
     private Button btnbitcoin;
     @FXML
@@ -62,6 +58,12 @@ public class FXMLDocumentController implements Initializable {
     private ImageView up;
     @FXML
     private ImageView down;
+    @FXML
+    private Button btn;
+    @FXML
+    private Label value;
+    @FXML
+    private TextField inputbox;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -94,63 +96,29 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void btnclickstocks(ActionEvent event) throws URISyntaxException, IOException, org.apache.hc.core5.http.ParseException, ParseException {
+        try {
+            stocks();
+        } catch (Exception a) {
 
-        stocks();
-
+        }
     }
 
     public void start() throws IOException, FileNotFoundException, ParseException {
-        klicked(BITCOIN);
+        
     }
 
     private void klicked(Coins coin) throws IOException, FileNotFoundException, ParseException {
-        chart.setVisible(true);
-        XYChart.Series<String, Number> databit = new XYChart.Series<>();
-        databit.getData().removeAll(Collections.singleton(chart.getData().setAll()));
-        Data data = new Data();
-        int vals[] = new int[10];
+        Parent root;
+        String path = "FXMLDocument.fxml";
+        root = FXMLLoader.load(getClass().getResource(path));
+        Stage stage = new Stage();
+        Stage old = (Stage) btn.getScene().getWindow();
+        Scene scene = new Scene(root);
 
-        for (int i = 0; i < 7; i++) {
-            /*
-            switch (coin) {
-                case "BITCOIN":
-                    databit.getData().add(new XYChart.Data<>(String.valueOf(i), (int)data.getBtc()));
-                    vals[i] = (int) data.getBtc();
-                    break;
-                case "ETHEREUM":
-                    databit.getData().add(new XYChart.Data<>(String.valueOf(i), (int)data.getEth()));
-                    vals[i] = (int) data.getEth();
-                    break;
-                case "DOGECOIN":
-                    databit.getData().add(new XYChart.Data<>(String.valueOf(i), (int)data.getDoge()));
-                    vals[i] = (int) data.getDoge();
-                    break;
-                    
-            }
-             */
+        stage.setScene(scene);
 
-            Random r = new Random();
-            int rnd = r.nextInt(10) + 50;
-            databit.getData().add(new XYChart.Data<>(String.valueOf(i), rnd));
-            vals[i] = rnd;
-
-        }
-
-        // System.out.println(vals[5] + "  "+ vals[6]);
-        gainsPerc = Double.valueOf(df.format(calcPerc(vals[6], vals[5])));
-
-        if (gainsPerc > 0) {
-            gains.setText(String.valueOf("+ " + gainsPerc + "%"));
-            up.setVisible(true);
-            down.setVisible(false);
-        } else {
-            gains.setText(String.valueOf(gainsPerc + "%"));
-            up.setVisible(false);
-            down.setVisible(true);
-        }
-
-        chart.getData().add(databit);
-        chart.setTitle(coin.toString(coin));
+        stage.show();
+        old.close();
     }
 
     private double calcPerc(double vorher, double nacher) {
@@ -161,17 +129,20 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void stocks() throws URISyntaxException, IOException, org.apache.hc.core5.http.ParseException, ParseException {
-        Parent root;
-        String path = "Stocks.fxml";
-        root = FXMLLoader.load(getClass().getResource(path));
-        Stage stage = new Stage();
-        Stage old = (Stage) chart.getScene().getWindow();
-        Scene scene = new Scene(root);
+        chart.setVisible(false);
+        up.setVisible(false);
+        down.setVisible(false);
 
-        stage.setScene(scene);
+        Data data = new Data();
+        String stok = String.valueOf(data.getStock("AAPL"));
+        gains.setText(stok);
 
-        stage.show();
-        old.close();
+    }
 
+    @FXML
+    private void btnclickgo(ActionEvent event) throws URISyntaxException, IOException, org.apache.hc.core5.http.ParseException, ParseException {
+        String input = inputbox.getText();
+        Double result = Data.getStock(input);
+        value.setText(String.valueOf("Value of "+input+": "+result));
     }
 }
