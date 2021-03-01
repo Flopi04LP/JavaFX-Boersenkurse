@@ -1,0 +1,71 @@
+/*bitcoin*/
+
+#btnbitcoin:hover{     
+  -fx-text-fill:yellow;
+  
+}
+#btnbitcoin:pressed{     
+  -fx-text-fill:yellow;
+  
+}
+#btnbitcoin{     
+  -fx-background-color:black;
+}
+
+/*ethereum*/
+
+#btnethereum:hover{     
+  -fx-text-fill:blue;
+  
+}
+#btnethereum:pressed{     
+  -fx-text-fill:blue;
+  
+}
+#btnethereum{     
+  -fx-background-color:black;
+}
+
+/*gogecoin*/
+
+#btndogecoin:hover{     
+  -fx-text-fill:#d9bd62;
+  
+}
+#btndogecoin:pressed{     
+  -fx-text-fill:#d9bd62;
+  
+}
+#btndogecoin{     
+  -fx-background-color:black;
+}
+
+/*stocks*/
+
+#btnstocks:hover{     
+  -fx-text-fill:green;
+  
+}
+#btnstocks:pressed{     
+  -fx-text-fill:green;
+  
+}
+
+#btnstocks{     
+  -fx-background-color:black;
+}
+
+/*settings*/
+
+#btnset:hover{     
+  -fx-text-fill:green;
+  
+}
+#btnset:pressed{     
+  -fx-text-fill:green;
+  
+}
+
+#btnset{     
+  -fx-background-color:black;
+}
