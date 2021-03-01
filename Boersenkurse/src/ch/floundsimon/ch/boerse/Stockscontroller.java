@@ -3,6 +3,7 @@ package ch.floundsimon.ch.boerse;
 import static ch.floundsimon.ch.boerse.Coins.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -26,7 +27,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.simple.parser.ParseException;
 
@@ -41,16 +44,7 @@ public class Stockscontroller implements Initializable {
     private LineChart<String, Number> chart;
     @FXML
     private Button btnbitcoin;
-    @FXML
-    private Button btnethereum;
-    @FXML
-    private Button btndogecoin;
-    @FXML
-    private Button btnstocks;
 
-    Integer bitcoinVals[] = new Integer[10];
-    Integer etherumVals[] = new Integer[10];
-    Integer dogecoinVals[] = new Integer[10];
     Double gainsPerc = 1.23;
     @FXML
     private Label gains;
@@ -64,38 +58,39 @@ public class Stockscontroller implements Initializable {
     private Label value;
     @FXML
     private TextField inputbox;
+    @FXML
+    private Label desc;
+    @FXML
+    private Label lowoftheday;
+    @FXML
+    private Label highoftheday;
+    @FXML
+    private Label previousclose;
+    @FXML
+    private Label labelRecomendation;
+    @FXML
+    private ImageView logo;
+    @FXML
+    private Label companyname;
+    @FXML
+    private Label noLogo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        try {
-            start();
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @FXML
-    private void btnclickbitcoin(ActionEvent event) throws IOException, FileNotFoundException, ParseException {
-        start();
+        desc.setVisible(false);
+        labelRecomendation.setVisible(false);
+        noLogo.setOpacity(0);
 
     }
 
     @FXML
-    private void btnclickethereum(ActionEvent event) throws IOException, FileNotFoundException, ParseException {
-
-        klicked(ETHEREUM);
+    private void btnclickbitcoin(ActionEvent event) throws Exception {
+        klicked();
     }
 
-    @FXML
-    private void btnclickdogecoin(ActionEvent event) throws IOException, FileNotFoundException, ParseException {
-        klicked(DOGECOIN);
-    }
 
-    @FXML
-    private void btnclickstocks(ActionEvent event) throws URISyntaxException, IOException, org.apache.hc.core5.http.ParseException, ParseException {
+
+    private void btnclickstocks(ActionEvent event) throws Exception {
         try {
             stocks();
         } catch (Exception a) {
@@ -103,11 +98,7 @@ public class Stockscontroller implements Initializable {
         }
     }
 
-    public void start() throws IOException, FileNotFoundException, ParseException {
-        
-    }
-
-    private void klicked(Coins coin) throws IOException, FileNotFoundException, ParseException {
+    private void klicked() throws Exception {        
         Parent root;
         String path = "FXMLDocument.fxml";
         root = FXMLLoader.load(getClass().getResource(path));
@@ -128,21 +119,77 @@ public class Stockscontroller implements Initializable {
         return a;
     }
 
-    private void stocks() throws URISyntaxException, IOException, org.apache.hc.core5.http.ParseException, ParseException {
+    private void stocks() throws Exception {
         chart.setVisible(false);
         up.setVisible(false);
         down.setVisible(false);
-
-        Data data = new Data();
-        String stok = String.valueOf(data.getStock("AAPL"));
-        gains.setText(stok);
-
     }
 
     @FXML
-    private void btnclickgo(ActionEvent event) throws URISyntaxException, IOException, org.apache.hc.core5.http.ParseException, ParseException {
-        String input = inputbox.getText();
-        Double result = Data.getStock(input);
-        value.setText(String.valueOf("Value of "+input+": "+result));
+    private void btnclickgo(ActionEvent event) throws Exception {
+        desc.setVisible(true);
+        String input = inputbox.getText().toUpperCase();
+        try {
+            Image image = new Image(StocksData.getLogoPath(input));
+            logo.setImage(image);
+            logo.setOpacity(100);
+            noLogo.setOpacity(0);
+        } catch (Exception e) {
+            noLogo.setOpacity(100);
+            logo.setOpacity(0);
+            System.out.println("There is no Logo available");
+        }
+
+        Double result = 0.0;
+        try {
+            result = StocksData.getStock(input.toUpperCase());
+        } catch (Exception e) {
+            System.out.println("No such company");
+        }
+        companyname.setText(StocksData.name);
+        value.setText(String.valueOf(result + "  " + StocksData.currency));
+
+        Double pc = 0.0;
+        Double perc = 0.0;
+        try {
+            pc = StocksData.writeStockJsonPc();
+            perc = Double.valueOf(df.format(Double.valueOf(calcPerc(pc, result))));
+        } catch (Exception e) {
+            System.out.println("Can't calculate percentage");
+        }
+        if (calcPerc(pc, perc) < 0) {
+            down.setVisible(true);
+            up.setVisible(false);
+            gains.setText(String.valueOf(perc + "%"));
+        } else if (calcPerc(pc, perc) > 0) {
+            down.setVisible(false);
+            up.setVisible(true);
+            gains.setText(String.valueOf("+" + perc + "%"));
+        } else {
+            System.out.println("Can't calculate percentages");
+        }
+
+        try {
+            lowoftheday.setVisible(true);
+            lowoftheday.setText(String.valueOf(StocksData.getLowOfTheDay()));
+
+            highoftheday.setVisible(true);
+            highoftheday.setText(String.valueOf(StocksData.getHighOfTheDay()));
+
+            previousclose.setVisible(true);
+            previousclose.setText(String.valueOf(StocksData.getPreviousClose()));
+
+            labelRecomendation.setVisible(true);
+            labelRecomendation.setText(String.valueOf(StocksData.getRecomendation(input.toUpperCase())));
+        } catch (Exception e) {
+            System.out.println("No Data for Highs, Lows and previous Close");
+        }
+    }
+
+    @FXML
+    private void onClick(MouseEvent event) throws Exception {
+        URI url = new URI(StocksData.weblink);
+        java.awt.Desktop.getDesktop().browse(url);
+
     }
 }
