@@ -43,10 +43,10 @@ public class Data {
         } catch (Exception e) {
             System.out.println("Error while making the api call");
         }
-        try{
+        try {
             ArrayList<Double> btcArray = getPriceChange(Coins.BITCOIN);
-        } catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
     }
 
@@ -73,7 +73,7 @@ public class Data {
             PrintWriter printWriter = new PrintWriter(fileWriter);
             printWriter.print(response_content);
             printWriter.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         } finally {
             response.close();
@@ -127,20 +127,19 @@ public class Data {
         }
 
         JSONObject hourObj = (JSONObject) jsonObj.get("1h");
-        Object hourO = hourObj.get("price_change");  
+        Object hourO = hourObj.get("price_change");
         JSONObject dayObj = (JSONObject) jsonObj.get("1d");
         Object dayO = dayObj.get("price_change");
         JSONObject weekObj = (JSONObject) jsonObj.get("7d");
         Object weekO = weekObj.get("price_change");
         JSONObject monthObj = (JSONObject) jsonObj.get("30d");
-        Object monthO =  monthObj.get("price_change");
-        
+        Object monthO = monthObj.get("price_change");
+
         Double hour = Double.valueOf(hourO.toString());
         Double day = Double.valueOf(dayO.toString());
         Double week = Double.valueOf(weekO.toString());
         Double month = Double.valueOf(monthO.toString());
-        
-        
+
         ArrayList<Double> returnArray = new ArrayList<>();
         System.out.println(hour);
         returnArray.set(0, hour);
@@ -163,15 +162,14 @@ public class Data {
         return btc;
     }
 
-    public ArrayList<Double> getBtcPriceChange(Coins coin) throws org.json.simple.parser.ParseException, IOException{
+    public ArrayList<Double> getBtcPriceChange(Coins coin) throws org.json.simple.parser.ParseException, IOException {
         return getPriceChange(coin);
     }
-    
-    public Double getStock(String stock) 
-            throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException{
-                
-        
-        String uri = "https://finnhub.io/api/v1/quote?symbol="+stock+"&token=sandbox_c0u914748v6qqphtv320";
+
+    public Double getStock(String stock)
+            throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
+
+        String uri = "https://finnhub.io/api/v1/quote?symbol=" + stock + "&token=sandbox_c0u914748v6qqphtv320";
         List<NameValuePair> params = new ArrayList<NameValuePair>();
 
         String response_content = "";
@@ -195,32 +193,31 @@ public class Data {
             PrintWriter printWriter = new PrintWriter(fileWriter);
             printWriter.print(response_content);
             printWriter.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         } finally {
             response.close();
         }
-        
-        System.out.println("Price "+stock+":  "+writeStockJson());
+
+        System.out.println("Price " + stock + ":  " + writeStockJson());
         return writeStockJson();
     }
-    private Double writeStockJson() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException{
-    JSONParser parser = new JSONParser();
+
+    private Double writeStockJson() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
+        JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(new FileReader("stock.json"));
         Object a = object.get("c");
-        
+
         String priceStr = String.valueOf(a);
         Double price;
-        
-        try{
+
+        try {
             price = Double.valueOf(priceStr);
-            
-        } catch(Exception e){
+
+        } catch (Exception e) {
             price = 111.0;
         }
-        
-        return price;
-}
-}
 
+        return price;
+    }
 }
