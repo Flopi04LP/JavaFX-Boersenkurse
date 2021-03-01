@@ -54,3 +54,18 @@
 #btnstocks{     
   -fx-background-color:black;
 }
+
+/*settings*/
+
+#btnset:hover{     
+  -fx-text-fill:green;
+  
+}
+#btnset:pressed{     
+  -fx-text-fill:green;
+  
+}
+
+#btnset{     
+  -fx-background-color:black;
+}
