@@ -53,12 +53,12 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <ImageView fx:id="up" fitHeight="72.0" fitWidth="109.0" layoutX="634.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="up" fitHeight="31.0" fitWidth="64.0" layoutX="653.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pics/up.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="down" fitHeight="97.0" fitWidth="96.0" layoutX="634.0" layoutY="291.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="down" fitHeight="31.0" fitWidth="57.0" layoutX="654.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pics/down.png" />
          </image>
