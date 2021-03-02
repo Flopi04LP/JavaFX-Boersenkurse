@@ -66,7 +66,6 @@ public class Stockscontroller implements Initializable {
         desc.setVisible(false);
         labelRecomendation.setVisible(false);
         noLogo.setOpacity(0);
-
     }
 
     @FXML
@@ -77,9 +76,7 @@ public class Stockscontroller implements Initializable {
     private void btnclickstocks(ActionEvent event) throws Exception {
         try {
             stocks();
-        } catch (Exception a) {
-
-        }
+        } catch (Exception a) {  }
     }
 
     private void klicked() throws Exception {
@@ -89,9 +86,7 @@ public class Stockscontroller implements Initializable {
         Stage stage = new Stage();
         Stage old = (Stage) btn.getScene().getWindow();
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
-
         stage.show();
         old.close();
     }
@@ -177,6 +172,5 @@ public class Stockscontroller implements Initializable {
     private void onClick(MouseEvent event) throws Exception {
         URI url = new URI(StocksData.weblink);
         java.awt.Desktop.getDesktop().browse(url);
-
     }
 }
