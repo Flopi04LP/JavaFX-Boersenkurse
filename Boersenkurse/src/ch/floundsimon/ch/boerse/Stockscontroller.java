@@ -1,181 +1,87 @@
 package ch.floundsimon.ch.boerse;
 
-import java.net.URI;
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import org.json.simple.JSONObject;
 
 /**
  *
  * @author Florian Büchi & Simon Kappeler
  */
-public class Stockscontroller implements Initializable {
+public class CryptoData {
 
-    private Label label;
-    private LineChart<String, Number> chart;
-    @FXML
-    private Button btnbitcoin;
+    private static boolean alreadyGotPrice = false;
+    public static double eth, doge, btc = 0;
+    public static ArrayList<Double> btcArray = new ArrayList<>();
+    public static String latestQueryCurrency = "none";
 
-    Double gainsPerc = 1.23;
-    @FXML
-    private Label gains;
-    @FXML
-    private ImageView up;
-    @FXML
-    private ImageView down;
-    @FXML
-    private Button btn;
-    @FXML
-    private Label value;
-    @FXML
-    private TextField inputbox;
-    @FXML
-    private Label desc;
-    @FXML
-    private Label lowoftheday;
-    @FXML
-    private Label highoftheday;
-    @FXML
-    private Label previousclose;
-    @FXML
-    private Label labelRecomendation;
-    @FXML
-    private ImageView logo;
-    @FXML
-    private Label companyname;
-    @FXML
-    private Label noLogo;
+    public static void getData(String currency) throws Exception {
+        
+        if (!alreadyGotPrice || currency != latestQueryCurrency ) {
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        desc.setVisible(false);
-        labelRecomendation.setVisible(false);
-        noLogo.setOpacity(0);
+            latestQueryCurrency = currency;
+            String uri = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cdogecoin&vs_currencies=" + currency + "";
+            
+            String response_content = DataHelper.makeApiCall(uri);
+            
+            JSONObject object = DataHelper.getJSONObject(response_content);
+
+            JSONObject priceEth = (JSONObject) object.get("ethereum");
+            JSONObject priceBtc = (JSONObject) object.get("bitcoin");
+            JSONObject priceDoge = (JSONObject) object.get("dogecoin");
+
+            Object btcObject = priceBtc.get(currency.toLowerCase());
+            String btcString = String.valueOf(btcObject);
+            btc = Double.valueOf(btcString);
+
+            Object ethObject = priceEth.get(currency.toLowerCase());
+            String ethString = String.valueOf(ethObject);
+            eth = Double.valueOf(ethString);
+
+            Object dogeObject = priceDoge.get(currency.toLowerCase());
+            String dogeString = String.valueOf(dogeObject);
+            doge = Double.valueOf(dogeString);
+
+            alreadyGotPrice = true;
+        } 
     }
 
-    @FXML
-    private void btnclickbitcoin(ActionEvent event) throws Exception {
-        klicked();
-    }
+    public static Double[] getFiveDays(Coins coin, String currency) throws Exception {
+        Double array[] = new Double[5];
+        LocalDate td = LocalDate.now();
+        String format = "dd-MM-yyyy";
+        String date = td.format(DateTimeFormatter.ofPattern(format));
+        String uri;
 
-    private void btnclickstocks(ActionEvent event) throws Exception {
-        try {
-            stocks();
-        } catch (Exception a) {
+        for (int i = 0; i < 5; i++) {
+            uri = "https://api.coingecko.com/api/v3/coins/" + coin.toString(coin) + "/history?date=" + td.minusDays(i).format(DateTimeFormatter.ofPattern(format)) + "&localization=false";
+
+            String response_content = DataHelper.makeApiCall(uri);
+
+            JSONObject object = DataHelper.getJSONObject(response_content);
+            JSONObject market_data = (JSONObject) object.get("market_data");
+            JSONObject current_price = (JSONObject) market_data.get("current_price");
+
+            Object price = current_price.get(currency.toLowerCase());
+            String priceString = String.valueOf(price);
+            Double fin = Double.valueOf(priceString);
+
+            array[i] = fin;
         }
+        return array;
     }
 
-    private void klicked() throws Exception {
-        Parent root;
-        String path = "FXMLDocument.fxml";
-        root = FXMLLoader.load(getClass().getResource(path));
-        Stage stage = new Stage();
-        Stage old = (Stage) btn.getScene().getWindow();
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-
-        stage.show();
-        old.close();
-    }
-
-    private double calcPerc(double vorher, double nacher) {
-        double b = Double.valueOf(vorher / nacher);
-        double c = b * 100;
-        double a = c - 100;
-        return a;
-    }
-
-    private void stocks() throws Exception {
-        chart.setVisible(false);
-        up.setVisible(false);
-        down.setVisible(false);
-    }
-
-    @FXML
-    private void btnclickgo(ActionEvent event) throws Exception {
-        desc.setVisible(true);
-        String input = inputbox.getText().toUpperCase();
-        System.out.println(input);
-        if (input != "" && input != null && input.length() > 0) {
-            try {
-                Image image = new Image(StocksData.getLogoPath(input));
-                logo.setImage(image);
-                logo.setOpacity(100);
-                noLogo.setOpacity(0);
-            } catch (Exception e) {
-                noLogo.setOpacity(100);
-                logo.setOpacity(0);
-                System.out.println("There is no Logo available");
-            }
-
-            Double result = 0.0;
-            try {
-                result = StocksData.getStock(input.toUpperCase());
-            } catch (Exception e) {
-                System.out.println("No such company");
-            }
-            companyname.setText(StocksData.name);
-            value.setText(String.valueOf(result + "  " + StocksData.currency));
-
-            Double pc = 0.0;
-            Double perc = 0.0;
-            try {
-                pc = StocksData.writeStockJsonPc();
-                perc = DataHelper.gains(pc, perc);
-
-            } catch (Exception e) {
-                System.out.println("Can't calculate percentage");
-            }
-            if (calcPerc(pc, perc) < 0) {
-                down.setVisible(true);
-                up.setVisible(false);
-                gains.setText(String.valueOf(perc + "%"));
-            } else if (calcPerc(pc, perc) > 0) {
-                down.setVisible(false);
-                up.setVisible(true);
-                gains.setText(String.valueOf("+" + perc + "%"));
-            } else {
-                System.out.println("Can't calculate percentages");
-            }
-
-            try {
-                lowoftheday.setVisible(true);
-                lowoftheday.setText(String.valueOf(StocksData.getLowOfTheDay()));
-
-                highoftheday.setVisible(true);
-                highoftheday.setText(String.valueOf(StocksData.getHighOfTheDay()));
-
-                previousclose.setVisible(true);
-                previousclose.setText(String.valueOf(StocksData.getPreviousClose()));
-
-                labelRecomendation.setVisible(true);
-                labelRecomendation.setText(String.valueOf(StocksData.getRecomendation(input.toUpperCase())));
-            } catch (Exception e) {
-                System.out.println("No Data for Highs, Lows and previous Close");
-            }
-        } else {
-            System.out.println("No input");
+    public static Double getCoin(Coins coin, String currency) throws Exception {
+        getData(currency);
+        switch (coin) {
+            case BITCOIN:
+                return btc;
+            case ETHEREUM:
+                return eth;
+            case DOGECOIN:
+                return doge;
         }
-    }
-
-    @FXML
-    private void onClick(MouseEvent event) throws Exception {
-        URI url = new URI(StocksData.weblink);
-        java.awt.Desktop.getDesktop().browse(url);
+        return null;
     }
 }
