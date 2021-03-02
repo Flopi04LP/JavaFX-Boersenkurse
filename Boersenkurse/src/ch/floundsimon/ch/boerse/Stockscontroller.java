@@ -1,29 +1,16 @@
 package ch.floundsimon.ch.boerse;
 
-import static ch.floundsimon.ch.boerse.Coins.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -31,7 +18,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -88,8 +74,6 @@ public class Stockscontroller implements Initializable {
         klicked();
     }
 
-
-
     private void btnclickstocks(ActionEvent event) throws Exception {
         try {
             stocks();
@@ -98,7 +82,7 @@ public class Stockscontroller implements Initializable {
         }
     }
 
-    private void klicked() throws Exception {        
+    private void klicked() throws Exception {
         Parent root;
         String path = "FXMLDocument.fxml";
         root = FXMLLoader.load(getClass().getResource(path));
