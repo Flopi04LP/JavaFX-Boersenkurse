@@ -1,27 +1,16 @@
 package ch.floundsimon.ch.boerse;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.classic.*;
 import org.apache.hc.core5.http.*;
-import org.apache.hc.core5.http.HttpHeaders;
-import org.apache.hc.core5.http.NameValuePair;
-import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.net.URIBuilder;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.simple.*;
 
 public class StocksData {
 
