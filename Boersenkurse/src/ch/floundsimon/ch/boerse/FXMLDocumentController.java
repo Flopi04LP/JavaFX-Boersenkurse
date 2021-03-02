@@ -112,6 +112,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void klicked(Coins coin) throws IOException, FileNotFoundException, ParseException, Exception {
+        if(DataHelper.ping()){
         currentCoin = coin;
         chart.setVisible(true);
         XYChart.Series<String, Number> databit = new XYChart.Series<>();
@@ -145,6 +146,10 @@ public class FXMLDocumentController implements Initializable {
 
         chart.getData().add(databit);
         chart.setTitle(coin.cleanString(coin));
+        } else{
+            chart.setTitle("No Internet");
+            hideGains();
+        }
     }
 
     private void stocks() throws URISyntaxException, IOException, org.apache.hc.core5.http.ParseException, ParseException {
@@ -165,5 +170,12 @@ public class FXMLDocumentController implements Initializable {
     private void inputCurrencyChange(ActionEvent event) throws Exception {
         currency = inputCurrency.getValue();
         klicked(currentCoin);
+    }
+    
+    private void hideGains(){
+        up.setVisible(false);
+        down.setVisible(false);
+        gains.setVisible(false);
+        inputCurrency.setVisible(false);
     }
 }
