@@ -14,51 +14,90 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.net.URIBuilder;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 /**
  *
  * @author Florian Büchi & Simon Kappeler
  */
-
 public class DataHelper {
 
     public static String makeApiCall(String url) throws Exception {
-        String uri = url;
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        if (ping()) {
+            String uri = url;
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-        String response_content = "";
+            String response_content = "";
 
-        URIBuilder query = new URIBuilder(uri);
-        query.addParameters(params);
+            URIBuilder query = new URIBuilder(uri);
+            query.addParameters(params);
 
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(query.build());
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpGet request = new HttpGet(query.build());
 
-        request.setHeader(HttpHeaders.ACCEPT, "application/json");
-        CloseableHttpResponse response = client.execute(request);
+            request.setHeader(HttpHeaders.ACCEPT, "application/json");
+            CloseableHttpResponse response = client.execute(request);
 
-        try {
-            HttpEntity entity = response.getEntity();
-            response_content = EntityUtils.toString(entity);
-            EntityUtils.consume(entity);
+            try {
+                HttpEntity entity = response.getEntity();
+                response_content = EntityUtils.toString(entity);
+                EntityUtils.consume(entity);
 
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            response.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            } finally {
+                response.close();
+            }
+            return response_content;
+        } else {
+            return "No internet";
         }
-        return response_content;
     }
 
     public static JSONObject getJSONObject(String string) throws Exception {
         JSONParser parser = new JSONParser();
         return (JSONObject) parser.parse(string);
     }
-    
-    public static Double gains(Double nacher, Double vorher){
+
+    public static Double gains(Double nacher, Double vorher) {
         DecimalFormat df = new DecimalFormat("0.00");
         return Double.valueOf(df.format(calcPerc(nacher, vorher)));
     }
-    private static double calcPerc(double vorher, double nacher) {
+
+    public static boolean ping() throws Exception {
+        try {
+            String uri = "https://api.coingecko.com/api/v3/ping";
+            URIBuilder query = new URIBuilder(uri);
+            String response_content = "";
+
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpGet request = new HttpGet(query.build());
+
+            request.setHeader(HttpHeaders.ACCEPT, "application/json");
+            CloseableHttpResponse response = client.execute(request);
+
+            try {
+                HttpEntity entity = response.getEntity();
+                response_content = EntityUtils.toString(entity);
+                EntityUtils.consume(entity);
+
+            } catch (Exception e) {
+                System.out.println(e);
+            } finally {
+                response.close();
+            }
+
+            if (response_content != "" && response_content != null) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // ----    
+    public static double calcPerc(double vorher, double nacher) {
         double b = Double.valueOf(vorher / nacher);
         double c = b * 100;
         double a = c - 100;
