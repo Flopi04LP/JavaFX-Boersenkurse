@@ -20,63 +20,38 @@ public class StocksData {
     public static String weblink = "";
     public static String jsonString = "";
 
-    public static Double getStock(String stock)
-            throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
+    public static Double getStock(String stock) throws Exception {
 
         String uri = "https://finnhub.io/api/v1/quote?symbol=" + stock + "&token=sandbox_c0u914748v6qqphtv320";
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-        String response_content = "";
-
-        URIBuilder query = new URIBuilder(uri);
-        query.addParameters(params);
-
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(query.build());
-
-        request.setHeader(HttpHeaders.ACCEPT, "application/json");
-        CloseableHttpResponse response = client.execute(request);
-
-        try {
-            // System.out.println(response.getStatusLine());
-
-            HttpEntity entity = response.getEntity();
-            response_content = EntityUtils.toString(entity);
-            EntityUtils.consume(entity);
-            jsonString = response_content;
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            response.close();
-        }
+        jsonString = makeApiCall(uri);
+        getProfile(stock);
 
         return writeStockJson();
     }
 
-    private static Double writeStockJson() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
+    private static Double writeStockJson() throws Exception {
         return getJsonValue("c", "stock.json");
     }
 
-    public static Double writeStockJsonPc() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
+    public static Double writeStockJsonPc() throws Exception {
         return getJsonValue("o", "stock.json");
 
     }
 
-    public static Double getHighOfTheDay() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
+    public static Double getHighOfTheDay() throws Exception {
         return getJsonValue("h", "stock.json");
     }
 
-    public static Double getLowOfTheDay() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
+    public static Double getLowOfTheDay() throws Exception {
         return getJsonValue("l", "stock.json");
     }
 
-    public static Double getPreviousClose() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
+    public static Double getPreviousClose() throws Exception {
         return getJsonValue("pc", "stock.json");
     }
 
-    public static Double getJsonValue(String field, String path) throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
-        JSONParser parser = new JSONParser();
-        JSONObject object = (JSONObject) parser.parse(jsonString);
+    public static Double getJsonValue(String field, String path) throws Exception {
+        JSONObject object = getJSONObject(jsonString);
         Object a = object.get(field);
 
         String priceStr = String.valueOf(a);
@@ -92,32 +67,11 @@ public class StocksData {
         return price;
     }
 
-    public static String getRecomendation(String symbol) throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
+    public static String getRecomendation(String symbol) throws Exception {
 
         String uri = "https://finnhub.io/api/v1/stock/recommendation?symbol=" + symbol + "&token=sandbox_c0u914748v6qqphtv320";
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-        String response_content = "";
-
-        URIBuilder query = new URIBuilder(uri);
-        query.addParameters(params);
-
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(query.build());
-
-        request.setHeader(HttpHeaders.ACCEPT, "application/json");
-        CloseableHttpResponse response = client.execute(request);
-
-        try {
-            HttpEntity entity = response.getEntity();
-            response_content = EntityUtils.toString(entity);
-            EntityUtils.consume(entity);
-
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            response.close();
-        }
+        String response_content = makeApiCall(uri);
 
         Double[] recomendationArray = new Double[6];
 
@@ -168,8 +122,53 @@ public class StocksData {
         }
     }
 
+    public static void getProfile(String symbol) throws Exception {
+        String uri = "https://finnhub.io/api/v1/stock/profile2?symbol=" + symbol + "&token=c0u914748v6qqphtv31g";
+        String response_content = makeApiCall(uri);
+
+        JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(response_content);
+
+        name = (String) object.get("name");
+        weblink = (String) object.get("weburl");
+        currency = (String) object.get("currency");
+    }
+
     public static String getLogoPath(String symbol) throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
         String path = "https://finnhub.io/api/logo?symbol=" + symbol + "";
         return path;
+    }
+
+    public static String makeApiCall(String url) throws Exception {
+        String uri = url;
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+        String response_content = "";
+
+        URIBuilder query = new URIBuilder(uri);
+        query.addParameters(params);
+
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpGet request = new HttpGet(query.build());
+
+        request.setHeader(HttpHeaders.ACCEPT, "application/json");
+        CloseableHttpResponse response = client.execute(request);
+
+        try {
+            HttpEntity entity = response.getEntity();
+            response_content = EntityUtils.toString(entity);
+            EntityUtils.consume(entity);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            response.close();
+        }
+        return response_content;
+    }
+
+    public static JSONObject getJSONObject(String string) throws Exception {
+        JSONParser parser = new JSONParser();
+        return (JSONObject) parser.parse(string);
     }
 }
