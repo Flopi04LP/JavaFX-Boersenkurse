@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.floundsimon.ch.boerse;
 
 /**
@@ -16,6 +11,15 @@ public enum Coins {
 
     public String toString(Coins a) {
         return String.valueOf(a).toLowerCase();
+    }
+    public static String cleanString(Coins a){
+        char[] array = String.valueOf(a).toCharArray();
+        String first = String.valueOf(array[0]).toUpperCase();
+        String rest ="";
+        for(int i = 1; i<array.length; i++){
+        rest += String.valueOf(array[i]).toLowerCase();
+        }
+        return first+rest;
     }
 
 }
