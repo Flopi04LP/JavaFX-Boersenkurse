@@ -94,12 +94,12 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <ImageView fx:id="up" fitHeight="72.0" fitWidth="109.0" layoutX="722.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="up" fitHeight="44.0" fitWidth="48.0" layoutX="746.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pics/up.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="down" fitHeight="97.0" fitWidth="96.0" layoutX="722.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="down" fitHeight="26.0" fitWidth="62.0" layoutX="746.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@pics/down.png" />
          </image>
@@ -112,4 +112,3 @@
       <ComboBox fx:id="inputCurrency" layoutX="751.0" layoutY="14.0" onAction="#inputCurrencyChange" opacity="0.44" prefWidth="150.0" promptText="Currency" visibleRowCount="5" />
    </children>
 </AnchorPane>
-
