@@ -17,7 +17,8 @@ public class CryptoData {
     public static String latestQueryCurrency = "none";
 
     public static void getData(String currency) throws Exception {
-        if (!alreadyGotPrice || currency != latestQueryCurrency) {
+        
+        if (!alreadyGotPrice || currency != latestQueryCurrency ) {
 
             latestQueryCurrency = currency;
             String uri = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cdogecoin&vs_currencies=" + currency + "";
@@ -43,7 +44,7 @@ public class CryptoData {
             doge = Double.valueOf(dogeString);
 
             alreadyGotPrice = true;
-        }
+        } 
     }
 
     public static Double[] getFiveDays(Coins coin, String currency) throws Exception {
