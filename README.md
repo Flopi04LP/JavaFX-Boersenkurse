@@ -29,3 +29,13 @@ If you want to use the programm yourself you have to:
 4. Excecute the Starter.java file
 
 Done! If something doesn't work, you can leave an issue on this Github page
+
+---
+
+We use the simple-json and httpClient Libraries.
+
+APIs used: 
+- https://finnhub.io
+- https://www.coingecko.com
+
+thx yall, making my life a lil' easier 
