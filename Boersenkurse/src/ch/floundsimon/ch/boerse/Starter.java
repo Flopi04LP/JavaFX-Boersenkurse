@@ -11,6 +11,7 @@ import javafx.stage.Stage;
  *
  * @author Florian Büchi & Simon Kappeler
  */
+
 public class Starter extends Application {
 
     @Override
@@ -22,11 +23,10 @@ public class Starter extends Application {
             stage.show();
         } catch (Exception e) {
             System.out.println(e);
-        }    
+        }
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-
 }
