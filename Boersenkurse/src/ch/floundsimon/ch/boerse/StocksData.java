@@ -23,7 +23,7 @@ public class StocksData {
     public static Double getStock(String stock) throws Exception {
 
         String uri = "https://finnhub.io/api/v1/quote?symbol=" + stock + "&token=sandbox_c0u914748v6qqphtv320";
-        jsonString = makeApiCall(uri);
+        jsonString = DataHelper.makeApiCall(uri);
         getProfile(stock);
 
         return writeStockJson();
@@ -51,7 +51,7 @@ public class StocksData {
     }
 
     public static Double getJsonValue(String field, String path) throws Exception {
-        JSONObject object = getJSONObject(jsonString);
+        JSONObject object = DataHelper.getJSONObject(jsonString);
         Object a = object.get(field);
 
         String priceStr = String.valueOf(a);
@@ -71,7 +71,7 @@ public class StocksData {
 
         String uri = "https://finnhub.io/api/v1/stock/recommendation?symbol=" + symbol + "&token=sandbox_c0u914748v6qqphtv320";
 
-        String response_content = makeApiCall(uri);
+        String response_content = DataHelper.makeApiCall(uri);
 
         Double[] recomendationArray = new Double[6];
 
@@ -124,7 +124,7 @@ public class StocksData {
 
     public static void getProfile(String symbol) throws Exception {
         String uri = "https://finnhub.io/api/v1/stock/profile2?symbol=" + symbol + "&token=c0u914748v6qqphtv31g";
-        String response_content = makeApiCall(uri);
+        String response_content = DataHelper.makeApiCall(uri);
 
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(response_content);
@@ -137,38 +137,5 @@ public class StocksData {
     public static String getLogoPath(String symbol) throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
         String path = "https://finnhub.io/api/logo?symbol=" + symbol + "";
         return path;
-    }
-
-    public static String makeApiCall(String url) throws Exception {
-        String uri = url;
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-        String response_content = "";
-
-        URIBuilder query = new URIBuilder(uri);
-        query.addParameters(params);
-
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(query.build());
-
-        request.setHeader(HttpHeaders.ACCEPT, "application/json");
-        CloseableHttpResponse response = client.execute(request);
-
-        try {
-            HttpEntity entity = response.getEntity();
-            response_content = EntityUtils.toString(entity);
-            EntityUtils.consume(entity);
-
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            response.close();
-        }
-        return response_content;
-    }
-
-    public static JSONObject getJSONObject(String string) throws Exception {
-        JSONParser parser = new JSONParser();
-        return (JSONObject) parser.parse(string);
     }
 }
