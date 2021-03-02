@@ -11,15 +11,13 @@ import org.apache.hc.core5.http.*;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.net.URIBuilder;
 import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
 
 public class StocksData {
 
-    public static String name="";
-    public static String currency="";
-    public static String weblink="";
-
-
-    
+    public static String name = "";
+    public static String currency = "";
+    public static String weblink = "";
 
     public static Double getStock(String stock)
             throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
@@ -98,7 +96,7 @@ public class StocksData {
             HttpEntity entity = response.getEntity();
             response_content = EntityUtils.toString(entity);
             EntityUtils.consume(entity);
-            
+
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -106,40 +104,39 @@ public class StocksData {
         }
 
         Double[] recomendationArray = new Double[6];
-        
+
         JSONParser parser = new JSONParser();
         JSONArray array = (JSONArray) parser.parse(response_content);
 
         JSONObject o = (JSONObject) array.get(0);
 
-        Object a =  o.get("strongBuy");
+        Object a = o.get("strongBuy");
         String f = String.valueOf(a);
         recomendationArray[0] = Double.valueOf(f);
-        
-        Object b =  o.get("buy");
+
+        Object b = o.get("buy");
         String g = String.valueOf(b);
         recomendationArray[1] = Double.valueOf(g);
 
-        Object c =  o.get("hold");
+        Object c = o.get("hold");
         String h = String.valueOf(c);
         recomendationArray[2] = Double.valueOf(h);
-        
-        Object d =  o.get("sell");
+
+        Object d = o.get("sell");
         String i = String.valueOf(d);
         recomendationArray[3] = Double.valueOf(i);
 
-        Object e =  o.get("strongSell");
+        Object e = o.get("strongSell");
         String j = String.valueOf(e);
         recomendationArray[4] = Double.valueOf(j);
-            
-        
+
         Double max = 0.0;
-        for(int y = 0; y < 5; y++) {
-            if(recomendationArray[y]>max){
+        for (int y = 0; y < 5; y++) {
+            if (recomendationArray[y] > max) {
                 max = recomendationArray[y];
             }
-          }
-        
+        }
+
         if (max == recomendationArray[0]) {
             return "We strongly recomend you buy";
         } else if (max == recomendationArray[1]) {
@@ -173,10 +170,10 @@ public class StocksData {
 
         return price;
     }
-    
-    public static String getLogoPath(String symbol)throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
 
-        String uri = "https://finnhub.io/api/v1/stock/profile2?symbol="+symbol.toUpperCase()+"&token=c0u914748v6qqphtv31g";
+    public static String getLogoPath(String symbol) throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
+
+        String uri = "https://finnhub.io/api/v1/stock/profile2?symbol=" + symbol.toUpperCase() + "&token=c0u914748v6qqphtv31g";
         List<NameValuePair> params = new ArrayList<NameValuePair>();
 
         String response_content = "";
@@ -191,6 +188,8 @@ public class StocksData {
         CloseableHttpResponse response = client.execute(request);
 
         try {
+            // System.out.println(response.getStatusLine());
+
             HttpEntity entity = response.getEntity();
             response_content = EntityUtils.toString(entity);
             EntityUtils.consume(entity);
@@ -200,16 +199,15 @@ public class StocksData {
             response.close();
         }
 
-        String path="";
+        String path = "";
         JSONParser parser = new JSONParser();
         JSONObject object = (JSONObject) parser.parse(response_content);
         path = (String) object.get("logo");
-        
-        
+
         name = (String) object.get("name");
         currency = (String) object.get("currency");
         weblink = (String) object.get("weburl");
-        
+
         return path;
-    }    
+    }
 }
