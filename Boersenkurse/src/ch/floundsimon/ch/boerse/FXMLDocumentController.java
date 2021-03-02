@@ -164,7 +164,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void inputCurrencyChange(ActionEvent event) throws Exception {
         currency = inputCurrency.getValue();
-        System.out.println(inputCurrency.getValue());
         klicked(currentCoin);
     }
 }
