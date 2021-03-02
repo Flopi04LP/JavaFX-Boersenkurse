@@ -18,6 +18,7 @@ public class StocksData {
     public static String name = "";
     public static String currency = "";
     public static String weblink = "";
+    public static String jsonString = "";
 
     public static Double getStock(String stock)
             throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
@@ -42,10 +43,7 @@ public class StocksData {
             HttpEntity entity = response.getEntity();
             response_content = EntityUtils.toString(entity);
             EntityUtils.consume(entity);
-            FileWriter fileWriter = new FileWriter("stock.json");
-            PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.print(response_content);
-            printWriter.close();
+            jsonString = response_content;
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -74,6 +72,24 @@ public class StocksData {
 
     public static Double getPreviousClose() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
         return getJsonValue("pc", "stock.json");
+    }
+
+    public static Double getJsonValue(String field, String path) throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(jsonString);
+        Object a = object.get(field);
+
+        String priceStr = String.valueOf(a);
+        Double price = 0.0;
+
+        try {
+            price = Double.valueOf(priceStr);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return price;
     }
 
     public static String getRecomendation(String symbol) throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
@@ -152,62 +168,8 @@ public class StocksData {
         }
     }
 
-    public static Double getJsonValue(String field, String path) throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
-
-        JSONParser parser = new JSONParser();
-        JSONObject object = (JSONObject) parser.parse(new FileReader(path));
-        Object a = object.get(field);
-
-        String priceStr = String.valueOf(a);
-        Double price;
-
-        try {
-            price = Double.valueOf(priceStr);
-
-        } catch (Exception e) {
-            price = 111.0;
-        }
-
-        return price;
-    }
-
     public static String getLogoPath(String symbol) throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
-
-        String uri = "https://finnhub.io/api/v1/stock/profile2?symbol=" + symbol.toUpperCase() + "&token=c0u914748v6qqphtv31g";
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-        String response_content = "";
-
-        URIBuilder query = new URIBuilder(uri);
-        query.addParameters(params);
-
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(query.build());
-
-        request.setHeader(HttpHeaders.ACCEPT, "application/json");
-        CloseableHttpResponse response = client.execute(request);
-
-        try {
-            // System.out.println(response.getStatusLine());
-
-            HttpEntity entity = response.getEntity();
-            response_content = EntityUtils.toString(entity);
-            EntityUtils.consume(entity);
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            response.close();
-        }
-
-        String path = "";
-        JSONParser parser = new JSONParser();
-        JSONObject object = (JSONObject) parser.parse(response_content);
-        path = (String) object.get("logo");
-
-        name = (String) object.get("name");
-        currency = (String) object.get("currency");
-        weblink = (String) object.get("weburl");
-
+        String path = "https://finnhub.io/api/logo?symbol=" + symbol + "";
         return path;
     }
 }
