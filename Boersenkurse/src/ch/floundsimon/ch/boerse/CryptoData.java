@@ -18,7 +18,7 @@ import org.json.simple.parser.JSONParser;
 
 /**
  *
- * @author Florian Büchi & Simon Kappeler
+ * @author kappe
  */
 public class CryptoData {
 
@@ -32,30 +32,10 @@ public class CryptoData {
 
             latestQueryCurrency = currency;
             String uri = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cdogecoin&vs_currencies=" + currency + "";
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-            String response_content = "";
-
-            URIBuilder query = new URIBuilder(uri);
-            query.addParameters(params);
-
-            CloseableHttpClient client = HttpClients.createDefault();
-            HttpGet request = new HttpGet(query.build());
-
-            request.setHeader(HttpHeaders.ACCEPT, "application/json");
-            CloseableHttpResponse response = client.execute(request);
-
-            try {
-                HttpEntity entity = response.getEntity();
-                response_content = EntityUtils.toString(entity);
-                EntityUtils.consume(entity);
-            } catch (Exception e) {
-                System.out.println(e);
-            } finally {
-                response.close();
-            }
-            JSONParser parser = new JSONParser();
-            JSONObject object = (JSONObject) parser.parse(response_content);
+            
+            String response_content = DataHelper.makeApiCall(uri);
+            
+            JSONObject object = DataHelper.getJSONObject(response_content);
 
             JSONObject priceEth = (JSONObject) object.get("ethereum");
             JSONObject priceBtc = (JSONObject) object.get("bitcoin");
@@ -87,31 +67,9 @@ public class CryptoData {
         for (int i = 0; i < 5; i++) {
             uri = "https://api.coingecko.com/api/v3/coins/" + coin.toString(coin) + "/history?date=" + td.minusDays(i).format(DateTimeFormatter.ofPattern(format)) + "&localization=false";
 
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            String response_content = DataHelper.makeApiCall(uri);
 
-            String response_content = "";
-
-            URIBuilder query = new URIBuilder(uri);
-            query.addParameters(params);
-
-            CloseableHttpClient client = HttpClients.createDefault();
-            HttpGet request = new HttpGet(query.build());
-
-            request.setHeader(HttpHeaders.ACCEPT, "application/json");
-            CloseableHttpResponse response = client.execute(request);
-
-            try {
-                HttpEntity entity = response.getEntity();
-                response_content = EntityUtils.toString(entity);
-                EntityUtils.consume(entity);
-            } catch (Exception e) {
-                System.out.println(e);
-            } finally {
-                response.close();
-            }
-
-            JSONParser parser = new JSONParser();
-            JSONObject object = (JSONObject) parser.parse(response_content);
+            JSONObject object = DataHelper.getJSONObject(response_content);
             JSONObject market_data = (JSONObject) object.get("market_data");
             JSONObject current_price = (JSONObject) market_data.get("current_price");
 
