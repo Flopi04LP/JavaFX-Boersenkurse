@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -34,7 +33,6 @@ import org.json.simple.parser.ParseException;
  */
 public class FXMLDocumentController implements Initializable {
 
-    DecimalFormat df = new DecimalFormat("0.00");
     private Label label;
     @FXML
     private LineChart<String, Number> chart;
@@ -73,7 +71,7 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        inputCurrency.setItems(FXCollections.observableArrayList(a,b,c ));
+        inputCurrency.setItems(FXCollections.observableArrayList(a, b, c));
         inputCurrency.setValue(a);
         currency = inputCurrency.getValue();
         try {
@@ -122,7 +120,7 @@ public class FXMLDocumentController implements Initializable {
         Double[] array = CryptoData.getFiveDays(coin, currency);
 
         for (int i = 0; i < 5; i++) {
-            Double val = array[i] ;
+            Double val = array[i];
             databit.getData().add(new XYChart.Data<>(String.valueOf(i), val));
             vals[i] = val;
         }
@@ -130,9 +128,10 @@ public class FXMLDocumentController implements Initializable {
         Double latest = CryptoData.getCoin(coin, currency);
         databit.getData().add(new XYChart.Data<>(String.valueOf(6), latest));
         vals[5] = latest;
-        price.setText(String.valueOf(latest)+"  "+currency.toUpperCase());
-        
-        gainsPerc = Double.valueOf(df.format(calcPerc(vals[5], vals[4])));
+        price.setText(String.valueOf(latest) + "  " + currency.toUpperCase());
+
+        // gainsPerc = Double.valueOf(df.format(calcPerc(vals[5], vals[4])));
+        gainsPerc = DataHelper.gains(vals[5], vals[4]);
 
         if (gainsPerc > 0) {
             gains.setText(String.valueOf("+ " + gainsPerc + "%"));
@@ -148,13 +147,6 @@ public class FXMLDocumentController implements Initializable {
         chart.setTitle(coin.cleanString(coin));
     }
 
-    private double calcPerc(double vorher, double nacher) {
-        double b = Double.valueOf(vorher / nacher);
-        double c = b * 100;
-        double a = c - 100;
-        return a;
-    }
-
     private void stocks() throws URISyntaxException, IOException, org.apache.hc.core5.http.ParseException, ParseException {
         Parent root;
         String path = "Stocks.fxml";
@@ -167,7 +159,6 @@ public class FXMLDocumentController implements Initializable {
 
         stage.show();
         old.close();
-
     }
 
     @FXML
