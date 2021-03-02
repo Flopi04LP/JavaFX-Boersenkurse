@@ -6,24 +6,23 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
+import javafx.scene.*;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -56,6 +55,7 @@ public class FXMLDocumentController implements Initializable {
     Integer etherumVals[] = new Integer[10];
     Integer dogecoinVals[] = new Integer[10];
     Double gainsPerc = 1.23;
+    String currency = "usd";
     @FXML
     private Label gains;
     @FXML
@@ -64,10 +64,18 @@ public class FXMLDocumentController implements Initializable {
     private ImageView down;
     @FXML
     private Label price;
+    @FXML
+    private ComboBox<String> inputCurrency;
+    String a = "usd";
+    String b = "eur";
+    String c = "chf";
+    Coins currentCoin = BITCOIN;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        inputCurrency.setItems(FXCollections.observableArrayList(a,b,c ));
+        inputCurrency.setValue(a);
+        currency = inputCurrency.getValue();
         try {
             start();
         } catch (IOException ex) {
@@ -98,9 +106,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void btnclickstocks(ActionEvent event) throws Exception {
-
         stocks();
-
     }
 
     public void start() throws Exception {
@@ -108,29 +114,23 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void klicked(Coins coin) throws IOException, FileNotFoundException, ParseException, Exception {
+        currentCoin = coin;
         chart.setVisible(true);
         XYChart.Series<String, Number> databit = new XYChart.Series<>();
         databit.getData().removeAll(Collections.singleton(chart.getData().setAll()));
         Double vals[] = new Double[6];
-        Double[] array = CryptoData.getFiveDays(coin);
+        Double[] array = CryptoData.getFiveDays(coin, currency);
 
         for (int i = 0; i < 5; i++) {
-            Double val = array[i];
+            Double val = array[i] * 0.2;
             databit.getData().add(new XYChart.Data<>(String.valueOf(i), val));
             vals[i] = val;
-
-            /*
-            Random r = new Random();
-            int rnd = r.nextInt(10) + 50;
-            databit.getData().add(new XYChart.Data<>(String.valueOf(i), rnd));
-            vals[i] = rnd;
-             */
         }
 
-        Double latest = CryptoData.getCoin(coin);
-        databit.getData().add(new XYChart.Data<>(String.valueOf(6), latest));
-        vals[5] = latest;
-        price.setText(String.valueOf(latest)+" USD");
+        Double latest = CryptoData.getCoin(coin, currency);
+        databit.getData().add(new XYChart.Data<>(String.valueOf(6), latest*0.2));
+        vals[5] = latest *0.2;
+        price.setText(String.valueOf(latest)+"  "+currency.toUpperCase());
         
         gainsPerc = Double.valueOf(df.format(calcPerc(vals[5], vals[4])));
 
@@ -145,7 +145,7 @@ public class FXMLDocumentController implements Initializable {
         }
 
         chart.getData().add(databit);
-        chart.setTitle(coin.toString(coin));
+        chart.setTitle(coin.cleanString(coin));
     }
 
     private double calcPerc(double vorher, double nacher) {
@@ -168,5 +168,12 @@ public class FXMLDocumentController implements Initializable {
         stage.show();
         old.close();
 
+    }
+
+    @FXML
+    private void inputCurrencyChange(ActionEvent event) throws Exception {
+        currency = inputCurrency.getValue();
+        System.out.println(inputCurrency.getValue());
+        klicked(currentCoin);
     }
 }
