@@ -25,7 +25,6 @@ import javafx.stage.Stage;
  */
 public class Stockscontroller implements Initializable {
 
-    DecimalFormat df = new DecimalFormat("0.00");
     private Label label;
     private LineChart<String, Number> chart;
     @FXML
@@ -76,7 +75,8 @@ public class Stockscontroller implements Initializable {
     private void btnclickstocks(ActionEvent event) throws Exception {
         try {
             stocks();
-        } catch (Exception a) {  }
+        } catch (Exception a) {
+        }
     }
 
     private void klicked() throws Exception {
@@ -86,7 +86,9 @@ public class Stockscontroller implements Initializable {
         Stage stage = new Stage();
         Stage old = (Stage) btn.getScene().getWindow();
         Scene scene = new Scene(root);
+
         stage.setScene(scene);
+
         stage.show();
         old.close();
     }
@@ -109,63 +111,66 @@ public class Stockscontroller implements Initializable {
         desc.setVisible(true);
         String input = inputbox.getText().toUpperCase();
         System.out.println(input);
-        if(input!=""&&input !=null&&input.length()>0){
-        try {
-            Image image = new Image(StocksData.getLogoPath(input));
-            logo.setImage(image);
-            logo.setOpacity(100);
-            noLogo.setOpacity(0);
-        } catch (Exception e) {
-            noLogo.setOpacity(100);
-            logo.setOpacity(0);
-            System.out.println("There is no Logo available");
-        }
+        if (input != "" && input != null && input.length() > 0) {
+            try {
+                Image image = new Image(StocksData.getLogoPath(input));
+                logo.setImage(image);
+                logo.setOpacity(100);
+                noLogo.setOpacity(0);
+            } catch (Exception e) {
+                noLogo.setOpacity(100);
+                logo.setOpacity(0);
+                System.out.println("There is no Logo available");
+            }
 
-        Double result = 0.0;
-        try {
-            result = StocksData.getStock(input.toUpperCase());
-        } catch (Exception e) {
-            System.out.println("No such company");
-        }
-        companyname.setText(StocksData.name);
-        value.setText(String.valueOf(result + "  " + StocksData.currency));
+            Double result = 0.0;
+            try {
+                result = StocksData.getStock(input.toUpperCase());
+            } catch (Exception e) {
+                System.out.println("No such company");
+            }
+            companyname.setText(StocksData.name);
+            value.setText(String.valueOf(result + "  " + StocksData.currency));
 
-        Double pc = 0.0;
-        Double perc = 0.0;
-        try {
-            pc = StocksData.writeStockJsonPc();
-            perc = Double.valueOf(df.format(Double.valueOf(calcPerc(pc, result))));
-        } catch (Exception e) {
-            System.out.println("Can't calculate percentage");
-        }
-        if (calcPerc(pc, perc) < 0) {
-            down.setVisible(true);
-            up.setVisible(false);
-            gains.setText(String.valueOf(perc + "%"));
-        } else if (calcPerc(pc, perc) > 0) {
-            down.setVisible(false);
-            up.setVisible(true);
-            gains.setText(String.valueOf("+" + perc + "%"));
+            Double pc = 0.0;
+            Double perc = 0.0;
+            try {
+                pc = StocksData.writeStockJsonPc();
+                perc = DataHelper.gains(pc, perc);
+
+            } catch (Exception e) {
+                System.out.println("Can't calculate percentage");
+            }
+            if (calcPerc(pc, perc) < 0) {
+                down.setVisible(true);
+                up.setVisible(false);
+                gains.setText(String.valueOf(perc + "%"));
+            } else if (calcPerc(pc, perc) > 0) {
+                down.setVisible(false);
+                up.setVisible(true);
+                gains.setText(String.valueOf("+" + perc + "%"));
+            } else {
+                System.out.println("Can't calculate percentages");
+            }
+
+            try {
+                lowoftheday.setVisible(true);
+                lowoftheday.setText(String.valueOf(StocksData.getLowOfTheDay()));
+
+                highoftheday.setVisible(true);
+                highoftheday.setText(String.valueOf(StocksData.getHighOfTheDay()));
+
+                previousclose.setVisible(true);
+                previousclose.setText(String.valueOf(StocksData.getPreviousClose()));
+
+                labelRecomendation.setVisible(true);
+                labelRecomendation.setText(String.valueOf(StocksData.getRecomendation(input.toUpperCase())));
+            } catch (Exception e) {
+                System.out.println("No Data for Highs, Lows and previous Close");
+            }
         } else {
-            System.out.println("Can't calculate percentages");
+            System.out.println("No input");
         }
-
-        try {
-            lowoftheday.setVisible(true);
-            lowoftheday.setText(String.valueOf(StocksData.getLowOfTheDay()));
-
-            highoftheday.setVisible(true);
-            highoftheday.setText(String.valueOf(StocksData.getHighOfTheDay()));
-
-            previousclose.setVisible(true);
-            previousclose.setText(String.valueOf(StocksData.getPreviousClose()));
-
-            labelRecomendation.setVisible(true);
-            labelRecomendation.setText(String.valueOf(StocksData.getRecomendation(input.toUpperCase())));
-        } catch (Exception e) {
-            System.out.println("No Data for Highs, Lows and previous Close");
-        }
-        } else System.out.println("No input");
     }
 
     @FXML
