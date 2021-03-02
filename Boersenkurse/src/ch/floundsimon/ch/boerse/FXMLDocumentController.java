@@ -30,7 +30,7 @@ import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author flori
+ * @author Florian Büchi & Simon Kappeler
  */
 public class FXMLDocumentController implements Initializable {
 
@@ -122,14 +122,14 @@ public class FXMLDocumentController implements Initializable {
         Double[] array = CryptoData.getFiveDays(coin, currency);
 
         for (int i = 0; i < 5; i++) {
-            Double val = array[i] * 0.2;
+            Double val = array[i] ;
             databit.getData().add(new XYChart.Data<>(String.valueOf(i), val));
             vals[i] = val;
         }
 
         Double latest = CryptoData.getCoin(coin, currency);
-        databit.getData().add(new XYChart.Data<>(String.valueOf(6), latest*0.2));
-        vals[5] = latest *0.2;
+        databit.getData().add(new XYChart.Data<>(String.valueOf(6), latest));
+        vals[5] = latest;
         price.setText(String.valueOf(latest)+"  "+currency.toUpperCase());
         
         gainsPerc = Double.valueOf(df.format(calcPerc(vals[5], vals[4])));
