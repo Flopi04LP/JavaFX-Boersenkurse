@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author flori
+ * @author Florian Büchi & Simon Kappeler
  */
 public class Stockscontroller implements Initializable {
 
@@ -113,6 +113,8 @@ public class Stockscontroller implements Initializable {
     private void btnclickgo(ActionEvent event) throws Exception {
         desc.setVisible(true);
         String input = inputbox.getText().toUpperCase();
+        System.out.println(input);
+        if(input!=""&&input !=null&&input.length()>0){
         try {
             Image image = new Image(StocksData.getLogoPath(input));
             logo.setImage(image);
@@ -168,6 +170,7 @@ public class Stockscontroller implements Initializable {
         } catch (Exception e) {
             System.out.println("No Data for Highs, Lows and previous Close");
         }
+        } else System.out.println("No input");
     }
 
     @FXML
