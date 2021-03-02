@@ -114,10 +114,7 @@ public class StocksData {
             HttpEntity entity = response.getEntity();
             response_content = EntityUtils.toString(entity);
             EntityUtils.consume(entity);
-            FileWriter fileWriter = new FileWriter("recomendation.json");
-            PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.print(response_content);
-            printWriter.close();
+            
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -125,8 +122,12 @@ public class StocksData {
         }
 
         Double[] recomendationArray = new Double[6];
+        
+        JSONParser parser = new JSONParser();
+        JSONArray array = (JSONArray) parser.parse(response_content);
 
-        JSONObject o = getJsonObject();
+        JSONObject o = (JSONObject) array.get(0);
+
         Object a =  o.get("strongBuy");
         String f = String.valueOf(a);
         recomendationArray[0] = Double.valueOf(f);
@@ -152,10 +153,8 @@ public class StocksData {
         for(int y = 0; y < 5; y++) {
             if(recomendationArray[y]>max){
                 max = recomendationArray[y];
-                System.out.println(recomendationArray[y]);
             }
           }
-        System.out.println("max: "+max);
         
         if (max == recomendationArray[0]) {
             return "We strongly recomend you buy";
@@ -170,15 +169,6 @@ public class StocksData {
         } else {
             return "";
         }
-    }
-
-    public static JSONObject getJsonObject() throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
-        JSONParser parser = new JSONParser();
-        JSONArray array = (JSONArray) parser.parse(new FileReader("recomendation.json"));
-
-        JSONObject object = (JSONObject) array.get(0);
-
-        return object;
     }
 
     public static Double getJsonValue(String field, String path) throws FileNotFoundException, IOException, org.json.simple.parser.ParseException {
@@ -199,7 +189,6 @@ public class StocksData {
 
         return price;
     }
-
     
     public static String getLogoPath(String symbol)throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
 
@@ -218,8 +207,6 @@ public class StocksData {
         CloseableHttpResponse response = client.execute(request);
 
         try {
-            // System.out.println(response.getStatusLine());
-
             HttpEntity entity = response.getEntity();
             response_content = EntityUtils.toString(entity);
             EntityUtils.consume(entity);
