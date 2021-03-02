@@ -9,7 +9,8 @@ Developed by Florian Büchi & Simon Kappeler for a schoolproject
 Major Bugs:           
 - none
                                
-Missing featuress:                      
+Missing featuress:      
+- Performance improvement, its pretty slow rn      
 - News
 - Live-Ticker thingy
 - Maybe a portfolio? Not sure yet
