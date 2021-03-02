@@ -2,17 +2,14 @@ package ch.floundsimon.ch.boerse;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.hc.client5.http.classic.methods.HttpGet;
-import org.apache.hc.client5.http.impl.classic.*;
 import org.apache.hc.core5.http.*;
-import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.apache.hc.core5.net.URIBuilder;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 
+/**
+ *
+ * @author Florian Büchi & Simon Kappeler
+ */
 public class StocksData {
 
     public static String name = "";
