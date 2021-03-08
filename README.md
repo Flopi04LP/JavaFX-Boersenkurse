@@ -8,6 +8,10 @@ Developed by Florian Büchi & Simon Kappeler for a schoolproject
 ---------------------------------------------------------------------------
 Major Bugs:           
 - none
+
+
+Small Bugs:
+- Currency ComboBox Title not white.
                                
 Missing featuress:      
 - Performance improvement, its pretty slow rn      
