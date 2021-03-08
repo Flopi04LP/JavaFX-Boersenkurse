@@ -54,3 +54,14 @@
 #btnstocks{     
   -fx-background-color:black;
 }
+
+
+#inputCurrency{     
+  -fx-background-color:black;
+  -fx-border-width: 3;
+  -fx-border-color: white;
+  
+}
+
+
+

@@ -68,12 +68,14 @@ public class FXMLDocumentController implements Initializable {
     String b = "eur";
     String c = "chf";
     Coins currentCoin = BITCOIN;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         inputCurrency.setItems(FXCollections.observableArrayList(a, b, c));
         inputCurrency.setValue(a);
         currency = inputCurrency.getValue();
+        
         try {
             start();
         } catch (IOException ex) {
