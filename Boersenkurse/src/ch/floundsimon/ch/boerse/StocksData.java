@@ -23,14 +23,14 @@ public class StocksData {
         jsonString = DataHelper.makeApiCall(uri);
         getProfile(stock);
 
-        return writeStockJson();
+        return getCurrentPrice();
     }
 
-    private static Double writeStockJson() throws Exception {
+    public static Double getCurrentPrice() throws Exception {
         return getJsonValue("c", "stock.json");
     }
 
-    public static Double writeStockJsonPc() throws Exception {
+    public static Double getOpenPrice() throws Exception {
         return getJsonValue("o", "stock.json");
 
     }
