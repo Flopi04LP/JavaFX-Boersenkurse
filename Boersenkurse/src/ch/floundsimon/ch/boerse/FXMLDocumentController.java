@@ -112,15 +112,16 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void klicked(Coins coin) throws IOException, FileNotFoundException, ParseException, Exception {
+        int days = 30;
         if(DataHelper.ping()){
         currentCoin = coin;
         chart.setVisible(true);
         XYChart.Series<String, Number> databit = new XYChart.Series<>();
         databit.getData().removeAll(Collections.singleton(chart.getData().setAll()));
-        Double vals[] = new Double[6];
-        Double[] array = CryptoData.getFiveDays(coin, currency);
+        Double vals[] = new Double[days+1];
+        Double[] array = CryptoData.getDays(coin, currency, days);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < days; i++) {
             Double val = array[i];
             databit.getData().add(new XYChart.Data<>(String.valueOf(i), val));
             vals[i] = val;
@@ -128,11 +129,11 @@ public class FXMLDocumentController implements Initializable {
 
         Double latest = CryptoData.getCoin(coin, currency);
         databit.getData().add(new XYChart.Data<>(String.valueOf(6), latest));
-        vals[5] = latest;
+        vals[days] = latest;
         price.setText(String.valueOf(latest) + "  " + currency.toUpperCase());
 
         // gainsPerc = Double.valueOf(df.format(calcPerc(vals[5], vals[4])));
-        gainsPerc = DataHelper.gains(vals[5], vals[4]);
+        gainsPerc = DataHelper.gains(vals[days], vals[days-1]);
 
         if (gainsPerc > 0) {
             gains.setText(String.valueOf("+ " + gainsPerc + "%"));
