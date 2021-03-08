@@ -6,12 +6,13 @@ Still really cool  : )
 Developed by Florian Büchi & Simon Kappeler for a schoolproject           
 
 ---------------------------------------------------------------------------
+Latest changes: 
+- Added the Portfolio thing
+- Doesn't quite work yet though          
+
 Major Bugs:           
-- none
+- Portfolio dont work
 
-
-Small Bugs:
-- Currency ComboBox Title not white.
                                
 Missing featuress:      
 - Performance improvement, its pretty slow rn      
