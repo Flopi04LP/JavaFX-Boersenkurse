@@ -47,14 +47,14 @@ public class CryptoData {
         } 
     }
 
-    public static Double[] getFiveDays(Coins coin, String currency) throws Exception {
-        Double array[] = new Double[5];
+    public static Double[] getDays(Coins coin, String currency, int days) throws Exception {
+        Double array[] = new Double[days];
         LocalDate td = LocalDate.now();
         String format = "dd-MM-yyyy";
         String date = td.format(DateTimeFormatter.ofPattern(format));
         String uri;
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < days; i++) {
             uri = "https://api.coingecko.com/api/v3/coins/" + coin.toString(coin) + "/history?date=" + td.minusDays(i).format(DateTimeFormatter.ofPattern(format)) + "&localization=false";
 
             String response_content = DataHelper.makeApiCall(uri);
