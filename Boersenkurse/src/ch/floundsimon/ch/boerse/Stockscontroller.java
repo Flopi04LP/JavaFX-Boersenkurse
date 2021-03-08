@@ -143,11 +143,13 @@ public class Stockscontroller implements Initializable {
                 Double pc = 0.0;
                 Double perc = 0.0;
                 try {
-                    pc = StocksData.writeStockJsonPc();
-                    perc = DataHelper.gains(pc, perc);
+                    pc = StocksData.getPreviousClose();
+                    Double current = StocksData.getCurrentPrice();
+                    perc = DataHelper.gains(pc, current);
 
                 } catch (Exception e) {
-                    System.out.println("Can't calculate percentage");
+                    System.out.println(e);
+                    // System.out.println("Can't calculate percentage");
                 }
                 if (DataHelper.calcPerc(pc, perc) < 0) {
                     down.setVisible(true);
@@ -158,7 +160,7 @@ public class Stockscontroller implements Initializable {
                     up.setVisible(true);
                     gains.setText(String.valueOf("+" + perc + "%"));
                 } else {
-                    System.out.println("Can't calculate percentages");
+                    // System.out.println("Can't calculate percentages");
                 }
 
                 try {
