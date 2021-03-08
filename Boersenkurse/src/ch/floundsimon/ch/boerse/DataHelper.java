@@ -22,7 +22,7 @@ import org.json.simple.parser.JSONParser;
 public class DataHelper {
 
     public static String makeApiCall(String url) throws Exception {
-        if (ping()) {
+        // if (ping()) {
             String uri = url;
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
@@ -48,9 +48,9 @@ public class DataHelper {
                 response.close();
             }
             return response_content;
-        } else {
-            return "No internet";
-        }
+        // } else {
+        //     return "No internet";
+        // }
     }
 
     public static JSONObject getJSONObject(String string) throws Exception {
@@ -64,36 +64,7 @@ public class DataHelper {
     }
 
     public static boolean ping() throws Exception {
-        try {
-            String uri = "https://api.coingecko.com/api/v3/ping";
-            URIBuilder query = new URIBuilder(uri);
-            String response_content = "";
-
-            CloseableHttpClient client = HttpClients.createDefault();
-            HttpGet request = new HttpGet(query.build());
-
-            request.setHeader(HttpHeaders.ACCEPT, "application/json");
-            CloseableHttpResponse response = client.execute(request);
-
-            try {
-                HttpEntity entity = response.getEntity();
-                response_content = EntityUtils.toString(entity);
-                EntityUtils.consume(entity);
-
-            } catch (Exception e) {
-                System.out.println(e);
-            } finally {
-                response.close();
-            }
-
-            if (response_content != "" && response_content != null) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
-        }
+        return true;
     }
 
     // ----    
