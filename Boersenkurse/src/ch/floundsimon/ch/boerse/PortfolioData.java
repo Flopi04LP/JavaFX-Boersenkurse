@@ -1,13 +1,14 @@
 package ch.floundsimon.ch.boerse;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Properties;
-import java.util.Set;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  *
@@ -15,38 +16,39 @@ import java.util.Set;
  */
 public class PortfolioData {
 
-    public static String title;
     public static Properties props = new Properties();
+    public static String filename = "config.properties";
 
     public static void setNewStock(String stock, Double amount, Double price) throws Exception {
         PortfolioStock p = new PortfolioStock(stock, amount, price);
         props.setProperty(p.getTitle(), p.getJson());
-        title = p.getTitle();
-        // System.out.println(props.getProperty(title));      
-        OutputStream output = new FileOutputStream("config.properties");
+        OutputStream output = new FileOutputStream(filename);
         props.store(output, null);
     }
-
-    public static String getStockJson(String stock) throws Exception {
-        InputStream input = new FileInputStream("config.properties");
+    
+    public static JSONObject getStockJson(String stock) throws Exception {
+        InputStream input = new FileInputStream(filename);
         props.load(input);
-        String p = props.getProperty(title);
+        String str = props.getProperty(stock);
+        
+        JSONParser parser = new JSONParser();
+        JSONObject p = (JSONObject) parser.parse(str);
         return p;
     }
-    
-    public static String[] getStocks() throws Exception{
-        String[] array = new String[4];
-        InputStream input = new FileInputStream("config.properties");
+
+    public static ArrayList<String> getStockTitles() throws Exception {
+        ArrayList<String> array = new ArrayList<>();
+        InputStream input = new FileInputStream(filename);
         props.load(input);
-        Set<Object> set = new HashSet<>();
-        set = props.keySet();
         int i = 0;
-        
-        for(Object a : set){
-            array[i] = (String) a;
+        Enumeration a = props.keys();
+
+        while (a.hasMoreElements()) {
+            String str = (String) a.nextElement();
+            array.add(str);
             i++;
         }
-        
+
         return array;
     }
 }

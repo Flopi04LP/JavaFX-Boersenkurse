@@ -61,18 +61,20 @@
       </ImageView>
       <HBox layoutX="224.0" layoutY="14.0" prefHeight="44.0" prefWidth="677.0">
          <children>
-            <Label fx:id="labelNameStock1" prefHeight="40.0" prefWidth="178.0" text="stock 1" textFill="WHITE" />
-            <Label fx:id="labelNameStock2" prefHeight="40.0" prefWidth="180.0" text="stock 2" textFill="WHITE" />
-            <Label fx:id="labelNameStock3" prefHeight="40.0" prefWidth="185.0" text="stock 3" textFill="WHITE" />
-            <Label fx:id="labelNameStock4" prefHeight="40.0" prefWidth="185.0" text="stock 4" textFill="WHITE" />
+            <Label prefHeight="40.0" prefWidth="178.0" text="Name" textFill="WHITE" />
+            <Label fx:id="labelNameStock1" prefHeight="40.0" prefWidth="180.0" text="a" textFill="WHITE" />
+            <Label fx:id="labelNameStock2" prefHeight="40.0" prefWidth="185.0" text="a" textFill="WHITE" />
+            <Label fx:id="labelNameStock3" prefHeight="40.0" prefWidth="185.0" text="a" textFill="WHITE" />
+            <Label fx:id="labelNameStock4" prefHeight="40.0" prefWidth="178.0" text="a" textFill="WHITE" />
          </children>
       </HBox>
       <HBox layoutX="224.0" layoutY="58.0" prefHeight="44.0" prefWidth="677.0">
          <children>
-            <Label fx:id="labelGainsStock1" prefHeight="40.0" prefWidth="178.0" text="gains 1" textFill="WHITE" />
-            <Label fx:id="labelGainsStock2" prefHeight="40.0" prefWidth="180.0" text="gains 2" textFill="WHITE" />
-            <Label fx:id="labelGainsStock3" prefHeight="40.0" prefWidth="185.0" text="gains 3" textFill="WHITE" />
-            <Label fx:id="labelGainsStock4" prefHeight="40.0" prefWidth="185.0" text="gains 4" textFill="WHITE" />
+            <Label prefHeight="40.0" prefWidth="178.0" text="Gains" textFill="WHITE" />
+            <Label fx:id="labelGainsStock1" prefHeight="40.0" prefWidth="180.0" text="a" textFill="WHITE" />
+            <Label fx:id="labelGainsStock2" prefHeight="40.0" prefWidth="185.0" text="a" textFill="WHITE" />
+            <Label fx:id="labelGainsStock3" prefHeight="40.0" prefWidth="185.0" text="a" textFill="WHITE" />
+            <Label fx:id="labelGainsStock4" prefHeight="40.0" prefWidth="178.0" text="a" textFill="WHITE" />
          </children>
       </HBox>
       <Pane layoutX="260.0" layoutY="197.0" prefHeight="200.0" prefWidth="641.0">
@@ -82,7 +84,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="labelValue" layoutX="14.0" layoutY="58.0" prefHeight="45.0" prefWidth="207.0" text="value" textFill="WHITE">
+            <Label fx:id="labelValue" layoutX="14.0" layoutY="58.0" prefHeight="45.0" prefWidth="339.0" text="value" textFill="WHITE">
                <font>
                   <Font size="30.0" />
                </font>
@@ -92,12 +94,12 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ImageView fitHeight="40.0" fitWidth="39.0" layoutX="479.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="up" fitHeight="40.0" fitWidth="39.0" layoutX="479.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@pics/up.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="39.0" layoutX="479.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="down" fitHeight="40.0" fitWidth="39.0" layoutX="479.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@pics/down.png" />
                </image>
@@ -106,11 +108,22 @@
       </Pane>
       <HBox layoutX="224.0" layoutY="102.0" prefHeight="44.0" prefWidth="677.0">
          <children>
-            <Label fx:id="labelValue1" prefHeight="40.0" prefWidth="178.0" text="value 1" textFill="WHITE" />
-            <Label fx:id="labelValue2" prefHeight="40.0" prefWidth="180.0" text="value 2" textFill="WHITE" />
-            <Label fx:id="labelValue3" prefHeight="40.0" prefWidth="185.0" text="value 3" textFill="WHITE" />
-            <Label fx:id="labelValue4" prefHeight="40.0" prefWidth="185.0" text="value 4" textFill="WHITE" />
+            <Label prefHeight="40.0" prefWidth="178.0" text="Value" textFill="WHITE" />
+            <Label fx:id="labelValue1" prefHeight="40.0" prefWidth="180.0" text="a" textFill="WHITE" />
+            <Label fx:id="labelValue2" prefHeight="40.0" prefWidth="185.0" text="a" textFill="WHITE" />
+            <Label fx:id="labelValue3" prefHeight="40.0" prefWidth="185.0" text="a" textFill="WHITE" />
+            <Label fx:id="labelValue4" prefHeight="40.0" prefWidth="178.0" text="a" textFill="WHITE" />
          </children>
       </HBox>
+      <Button fx:id="btnrefresh" alignment="BASELINE_LEFT" layoutX="585.0" layoutY="488.0" mnemonicParsing="false" onAction="#onClickBtnRefresh" prefHeight="44.0" prefWidth="117.0" style="-fx-background-color: black;" text="Refresh" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="31.0" fitWidth="32.0" layoutX="682.0" layoutY="495.0" onMouseClicked="#onClickBtnRefresh">
+         <image>
+            <Image url="@pics/icons8_synchronize_32px.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
