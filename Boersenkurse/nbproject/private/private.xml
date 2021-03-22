@@ -2,17 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/flori/Desktop/JavaFX-Boersenkurse-main/Boersenkurse/src/ch/floundsimon/ch/boerse/Settings.fxml</file>
-            <file>file:/C:/Users/flori/Desktop/JavaFX-Boersenkurse-main/Boersenkurse/src/ch/floundsimon/ch/boerse/FXMLDocument.fxml</file>
-            <file>file:/C:/Users/flori/Desktop/JavaFX-Boersenkurse-main/Boersenkurse/src/ch/floundsimon/ch/boerse/FXMLDocumentController.java</file>
-            <file>file:/C:/Users/flori/Desktop/JavaFX-Boersenkurse-main/Boersenkurse/src/ch/floundsimon/ch/boerse/Stocks.fxml</file>
-            <file>file:/C:/Users/flori/Desktop/JavaFX-Boersenkurse-main/Boersenkurse/src/ch/floundsimon/ch/boerse/buttons.css</file>
-            <file>file:/C:/Users/flori/Desktop/JavaFX-Boersenkurse-main/Boersenkurse/src/ch/floundsimon/ch/boerse/Data.java</file>
-            <file>file:/C:/Users/flori/Desktop/JavaFX-Boersenkurse-main/Boersenkurse/src/ch/floundsimon/ch/boerse/chart.css</file>
-            <file>file:/C:/Users/flori/Desktop/JavaFX-Boersenkurse-main/Boersenkurse/src/ch/floundsimon/ch/boerse/Starter.java</file>
-            <file>file:/C:/Users/flori/Desktop/JavaFX-Boersenkurse-main/Boersenkurse/src/ch/floundsimon/ch/boerse/Stockscontroller.java</file>
-            <file>file:/C:/Users/flori/Desktop/JavaFX-Boersenkurse-main/Boersenkurse/src/ch/floundsimon/ch/boerse/SettingsController.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
