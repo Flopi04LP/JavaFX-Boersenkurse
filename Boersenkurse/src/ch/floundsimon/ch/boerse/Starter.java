@@ -20,6 +20,7 @@ public class Starter extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.getIcons().add(new Image("https://i.imgur.com/TREkLdl.png"));
             stage.setTitle("Börsenkurse");
             stage.show();
         } catch (Exception e) {
