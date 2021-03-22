@@ -13,11 +13,11 @@
    <children>
       <VBox layoutX="14.0" layoutY="79.0" prefHeight="210.0" prefWidth="338.0">
          <children>
-            <TextField fx:id="inputStocksymbol" prefHeight="31.0" prefWidth="274.0" promptText="Stock symbol" />
+            <TextField fx:id="inputStocksymbol" prefHeight="31.0" prefWidth="274.0" promptText="Stock symbol" styleClass="stocksinputfields" stylesheets="@buttons.css" />
             <Label prefHeight="47.0" prefWidth="360.0" />
-            <TextField fx:id="inputAmount" promptText="Amount " />
+            <TextField fx:id="inputAmount" promptText="Amount " styleClass="stocksinputfields" stylesheets="@buttons.css" />
             <Label prefHeight="47.0" prefWidth="360.0" />
-            <TextField fx:id="inputPrice" promptText="Price " />
+            <TextField fx:id="inputPrice" promptText="Price " styleClass="stocksinputfields" stylesheets="@buttons.css" />
          </children>
       </VBox>
       <Label fx:id="labelTitle" layoutX="14.0" layoutY="19.0" text="New Stock" textFill="WHITE">

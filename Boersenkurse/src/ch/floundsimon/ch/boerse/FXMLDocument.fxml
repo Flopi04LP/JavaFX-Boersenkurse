@@ -124,6 +124,6 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <ComboBox fx:id="inputCurrency" layoutX="751.0" layoutY="14.0" onAction="#inputCurrencyChange" opacity="0.44" prefWidth="150.0" promptText="Currency" visibleRowCount="5" />
+      <ComboBox fx:id="inputCurrency" layoutX="751.0" layoutY="14.0" onAction="#inputCurrencyChange" opacity="0.44" prefWidth="150.0" promptText="Currency" styleClass="comboboxcurrency" stylesheets="@buttons.css" visibleRowCount="5" />
    </children>
 </AnchorPane>

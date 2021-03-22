@@ -63,13 +63,13 @@
             <Image url="@pics/down.png" />
          </image>
       </ImageView>
-      <TextField fx:id="inputbox" layoutX="273.0" layoutY="73.0" prefHeight="31.0" prefWidth="247.0" />
+      <TextField fx:id="inputbox" layoutX="273.0" layoutY="73.0" prefHeight="31.0" prefWidth="247.0" promptText="Type your stock here" styleClass="stocktextfield" stylesheets="@buttons.css" />
       <Label fx:id="e" layoutX="271.0" layoutY="26.0" text="Search" textFill="#f5f5f5">
          <font>
             <Font size="32.0" />
          </font>
       </Label>
-      <Button fx:id="btn" layoutX="530.0" layoutY="73.0" mnemonicParsing="false" onAction="#btnclickgo" text="Go" />
+      <Button fx:id="btn" layoutX="530.0" layoutY="73.0" mnemonicParsing="false" onAction="#btnclickgo" styleClass="btnblackstock" stylesheets="@buttons.css" text="Go" />
       <Label fx:id="value" layoutX="268.0" layoutY="268.0" prefHeight="57.0" prefWidth="374.0" textFill="WHITE">
          <font>
             <Font size="30.0" />

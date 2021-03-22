@@ -1,85 +1,118 @@
 /*bitcoin*/
 
 #btnbitcoin:hover{     
-  -fx-text-fill:yellow;
-  
+    -fx-text-fill:yellow;
+
 }
 #btnbitcoin:pressed{     
-  -fx-text-fill:yellow;
-  
+    -fx-text-fill:yellow;
+
 }
 #btnbitcoin{     
-  -fx-background-color:black;
+    -fx-background-color:black;
 }
 
 /*ethereum*/
 
 #btnethereum:hover{     
-  -fx-text-fill:blue;
-  
+    -fx-text-fill:blue;
+
 }
 #btnethereum:pressed{     
-  -fx-text-fill:blue;
-  
+    -fx-text-fill:blue;
+
 }
 #btnethereum{     
-  -fx-background-color:black;
+    -fx-background-color:black;
 }
 
 /*gogecoin*/
 
 #btndogecoin:hover{     
-  -fx-text-fill:#d9bd62;
-  
+    -fx-text-fill:#d9bd62;
+
 }
 #btndogecoin:pressed{     
-  -fx-text-fill:#d9bd62;
-  
+    -fx-text-fill:#d9bd62;
+
 }
 #btndogecoin{     
-  -fx-background-color:black;
+    -fx-background-color:black;
 }
 
 /*stocks*/
 
 #btnstocks:hover{     
-  -fx-text-fill:green;
-  
+    -fx-text-fill:green;
+
 }
 #btnstocks:pressed{     
-  -fx-text-fill:green;
-  
+    -fx-text-fill:green;
+
 }
 
 #btnstocks{     
-  -fx-background-color:black;
+    -fx-background-color:black;
 }
 
 /*stocks*/
 
 #btnPortfolio:hover{     
-  -fx-text-fill:orange;
-  
+    -fx-text-fill:orange;
+
 }
 #btnPortfolio:pressed{     
-  -fx-text-fill:orange;
-  
+    -fx-text-fill:orange;
+
 }
 
 #btnPortfolio{     
-  -fx-background-color:black;
+    -fx-background-color:black;
 }
 /*stocks*/
 
 #btnadd:hover{     
-  -fx-text-fill:white;
-  
+    -fx-text-fill:white;
+
 }
 #btnadd:pressed{     
-  -fx-text-fill:white;
-  
+    -fx-text-fill:white;
+
 }
 
 #btnadd{     
-  -fx-background-color:black;
+    -fx-background-color:black;
 }
+
+/*currency input*/
+
+.comboboxcurrency{
+    -fx-background-color:black;
+    -fx-border-width: 3;
+    -fx-border-color: white;
+    -fx-text-fill:white;
+}
+
+.comboboxcurrency label{
+    -fx-text-fill:white;
+}
+
+
+.stocksinputfields{
+    -fx-background-color: black;
+    -fx-border-color: white;
+}
+
+.stocktextfield {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+.btnblackstock{
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+
