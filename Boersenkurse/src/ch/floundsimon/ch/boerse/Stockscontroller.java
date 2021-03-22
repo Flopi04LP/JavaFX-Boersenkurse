@@ -182,9 +182,18 @@ public class Stockscontroller implements Initializable {
 
                     previousclose.setVisible(true);
                     previousclose.setText(String.valueOf(StocksData.getPreviousClose()));
-
-                    labelRecomendation.setVisible(true);
-                    labelRecomendation.setText(String.valueOf(StocksData.getRecomendation(input.toUpperCase())));
+                    
+                    if (input.equals("GME")) {
+                        rocket1.setVisible(true);
+                        rocket2.setVisible(true);
+                        labelRecomendation.setVisible(true);
+                        labelRecomendation.setText("HOLDDD!!!");
+                    } else {
+                        rocket1.setVisible(false);
+                        rocket2.setVisible(false);
+                        labelRecomendation.setVisible(true);
+                        labelRecomendation.setText(String.valueOf(StocksData.getRecomendation(input.toUpperCase())));
+                    }
                     
                 } catch (Exception e) {
                     System.out.println("No Data for Highs, Lows and previous Close");
