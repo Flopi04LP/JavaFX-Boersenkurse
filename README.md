@@ -42,4 +42,4 @@ APIs used:
 - https://finnhub.io | for stock data
 - https://www.coingecko.com | for crypto data
 
-thx yall, making my life a lil' easier 
+thx yall, making our lives a lil' easier 
