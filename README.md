@@ -8,17 +8,17 @@ Developed by Florian Büchi & Simon Kappeler for a schoolproject
 ---------------------------------------------------------------------------
 Latest changes: 
 - Added the Portfolio thing
-- Doesn't quite work yet though          
+- Added tons of comments for the readers sake        
 
 Major Bugs:           
-- Portfolio dont work
+- Portfolio only works with exactly 4 stocks
+- Needa fix that
 
                                
 Missing featuress:      
 - Performance improvement, its pretty slow rn      
 - News
 - Live-Ticker thingy
-- Maybe a portfolio? Not sure yet
 
 ----
 Status:
@@ -30,8 +30,7 @@ If you want to use the programm yourself you have to:
 
 1. Download the code and remove the .zip
 2. Open the code in an IDE, only tested it in Netbeans 8.2 though
-3. Add the .jar files from the /lib folder to the libraries
-4. Excecute the Starter.java file
+3. Excecute the Starter.java file
 
 Done! If something doesn't work, you can leave an issue on this Github page
 
