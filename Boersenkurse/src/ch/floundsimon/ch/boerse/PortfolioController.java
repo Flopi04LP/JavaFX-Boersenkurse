@@ -21,8 +21,9 @@ import org.json.simple.JSONObject;
 /**
  * FXML Controller class
  *
- * @author kappe
+ * @author Florian Büchi & Simon Kappeler
  */
+// Controller file for the Potfolio View
 public class PortfolioController implements Initializable {
 
     @FXML
@@ -60,11 +61,10 @@ public class PortfolioController implements Initializable {
 
     private String[] stockJson;
 
-    /**
-     * Initializes the controller class.
-     */
+    // NumberFormats for different double formats we use
     NumberFormat formatter = new DecimalFormat("###.##");
     NumberFormat valueFormat = new DecimalFormat("############.##");
+    
     @FXML
     private ImageView up;
     @FXML
@@ -81,6 +81,7 @@ public class PortfolioController implements Initializable {
     }
 
     @FXML
+    // Opens the Bitcoin window and closes this one
     private void btnclickbitcoin(ActionEvent event) throws Exception {
         Parent root;
         String path = "FXMLDocument.fxml";
@@ -95,6 +96,7 @@ public class PortfolioController implements Initializable {
         old.close();
     }
 
+    // Function to add a stock to the portfolio
     private void add() throws Exception {
         try {
             Parent root;
@@ -122,8 +124,11 @@ public class PortfolioController implements Initializable {
         add();
     }
 
+    // Attempts to refresh the portfolio after a new stock was added
+    // Or to Init the window
     public void refresh() throws Exception {
         try {
+            // Arrays to Store data for the individual stocks into
             ArrayList<String> a = PortfolioData.getStockTitles();
             JSONObject jsonObjects[] = new JSONObject[4];
             Double amount[] = new Double[4];
@@ -134,6 +139,7 @@ public class PortfolioController implements Initializable {
             Double totalValue = 0.0;
             Double totalGains = 0.0;
 
+            // Saves the data into the arrays for later use
             for (int i = 0; i < 4; i++) {
                 try {
                     jsonObjects[i] = PortfolioData.getStockJson(a.get(i));
@@ -147,7 +153,8 @@ public class PortfolioController implements Initializable {
                 } catch (Exception e) {
                 }
             }
-
+            
+            // Add the gains of each stocks
             totalGains = gains[0] + gains[1] + gains[2] + gains[3];
             totalGains = totalGains / 4;
 
@@ -161,6 +168,7 @@ public class PortfolioController implements Initializable {
                 System.out.println("Can't calculate percentages");
             }
 
+            // Sets the text of the labels to pries, values and gains
             labelGainsPerc.setText(formatter.format(totalGains) + " %");
             labelValue.setText(valueFormat.format(totalValue) + " USD");
 
@@ -176,6 +184,7 @@ public class PortfolioController implements Initializable {
             labelValue4.setText(String.valueOf(valueNow[3] + " USD"));
             labelGainsStock4.setText(gains[3] + " %");
 
+            // Sets the name of each stock
             labelNameStock1.setText(a.get(0));
             labelNameStock2.setText(a.get(1));
             labelNameStock3.setText(a.get(2));
@@ -185,7 +194,6 @@ public class PortfolioController implements Initializable {
         }
     }
 
-    @FXML
     private void onClickBtnRefresh(ActionEvent event) throws Exception {
         refresh();
     }

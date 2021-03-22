@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 public class Starter extends Application {
 
     @Override
+    // Starts the application
     public void start(Stage stage) throws Exception {
         try {
             DataHelper.ping();

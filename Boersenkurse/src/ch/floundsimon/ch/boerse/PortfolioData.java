@@ -12,13 +12,15 @@ import org.json.simple.parser.JSONParser;
 
 /**
  *
- * @author kappe
+ * @author Florian Büchi & Simon Kappeler
  */
+// Model class for the PortfolioController
 public class PortfolioData {
 
     public static Properties props = new Properties();
     public static String filename = "config.properties";
 
+    // Creates a new Property for a new Portfolio stock
     public static void setNewStock(String stock, Double amount, Double price) throws Exception {
         PortfolioStock p = new PortfolioStock(stock, amount, price);
         props.setProperty(p.getTitle(), p.getJson());
@@ -26,6 +28,7 @@ public class PortfolioData {
         props.store(output, null);
     }
     
+    // Gets the JSONObject of a Stock from the properties file
     public static JSONObject getStockJson(String stock) throws Exception {
         InputStream input = new FileInputStream(filename);
         props.load(input);
@@ -36,6 +39,7 @@ public class PortfolioData {
         return p;
     }
 
+    // Get the titles of all stocks saved in the properties
     public static ArrayList<String> getStockTitles() throws Exception {
         ArrayList<String> array = new ArrayList<>();
         InputStream input = new FileInputStream(filename);

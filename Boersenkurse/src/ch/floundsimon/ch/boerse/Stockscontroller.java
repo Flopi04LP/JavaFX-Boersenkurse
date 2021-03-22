@@ -22,6 +22,7 @@ import javafx.stage.Stage;
  *
  * @author Florian Büchi & Simon Kappeler
  */
+// Controller file for the Stocks View
 public class Stockscontroller implements Initializable {
 
     private Label label;
@@ -93,6 +94,7 @@ public class Stockscontroller implements Initializable {
         }
     }
 
+    // Opens the Crypto window and closes this one
     private void klicked() throws Exception {
         Parent root;
         String path = "FXMLDocument.fxml";
@@ -106,7 +108,8 @@ public class Stockscontroller implements Initializable {
         stage.show();
         old.close();
     }
-
+    
+    // Initializes the charts and arrows
     private void stocks() throws Exception {
         chart.setVisible(false);
         up.setVisible(false);
@@ -114,13 +117,16 @@ public class Stockscontroller implements Initializable {
     }
 
     @FXML
+    // On click of the 'go' button which looks up a stock
     private void btnclickgo(ActionEvent event) throws Exception {
         if (DataHelper.ping()) {
             desc.setVisible(true);
             String input = inputbox.getText().toUpperCase();
-            System.out.println(input);
+            
+            // Make sure the input is not null or empty
             if (input != "" && input != null && input.length() > 0) {
                 try {
+                    // Set the logo
                     Image image = new Image(StocksData.getLogoPath(input));
                     logo.setImage(image);
                     logo.setOpacity(100);
@@ -133,10 +139,12 @@ public class Stockscontroller implements Initializable {
 
                 Double result = 0.0;
                 try {
+                    // Get Data from the Model class and save it to a double
                     result = StocksData.getStock(input.toUpperCase());
                 } catch (Exception e) {
                     System.out.println("No such company");
                 }
+                // set the text for the company name and the current price
                 companyname.setText(StocksData.name);
                 value.setText(String.valueOf(result + "  " + StocksData.currency));
 
@@ -162,7 +170,9 @@ public class Stockscontroller implements Initializable {
                 } else {
                     // System.out.println("Can't calculate percentages");
                 }
-
+                
+                // Set the text for high, low and previous close data
+                // As well as the Reccomendation
                 try {
                     lowoftheday.setVisible(true);
                     lowoftheday.setText(String.valueOf(StocksData.getLowOfTheDay()));
@@ -175,6 +185,7 @@ public class Stockscontroller implements Initializable {
 
                     labelRecomendation.setVisible(true);
                     labelRecomendation.setText(String.valueOf(StocksData.getRecomendation(input.toUpperCase())));
+                    
                 } catch (Exception e) {
                     System.out.println("No Data for Highs, Lows and previous Close");
                 }
@@ -189,6 +200,8 @@ public class Stockscontroller implements Initializable {
     }
 
     @FXML
+    // Opens the companys website if the user clicks on the logo
+    // Only works if the api actually gives a logo and a website
     private void onClick(MouseEvent event) throws Exception {
         if (DataHelper.ping()) {
             URI url = new URI(StocksData.weblink);
@@ -197,6 +210,7 @@ public class Stockscontroller implements Initializable {
         }
     }
 
+    // Hides stuff for aestetic reasons dont ask why ok
     private void hideGains() {
         up.setVisible(false);
         down.setVisible(false);

@@ -115,7 +115,7 @@
             <Label fx:id="labelValue4" prefHeight="40.0" prefWidth="178.0" text="a" textFill="WHITE" />
          </children>
       </HBox>
-      <Button fx:id="btnrefresh" alignment="BASELINE_LEFT" layoutX="585.0" layoutY="488.0" mnemonicParsing="false" onAction="#onClickBtnRefresh" prefHeight="44.0" prefWidth="117.0" style="-fx-background-color: black;" text="Refresh" textFill="WHITE">
+      <Button fx:id="btnrefresh" alignment="BASELINE_LEFT" layoutX="585.0" layoutY="488.0" mnemonicParsing="false" onMouseClicked="#onClickBtnRefresh" prefHeight="44.0" prefWidth="117.0" style="-fx-background-color: black;" text="Refresh" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

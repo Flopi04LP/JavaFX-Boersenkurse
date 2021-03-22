@@ -31,6 +31,7 @@ import org.json.simple.parser.ParseException;
  *
  * @author Florian Büchi & Simon Kappeler
  */
+// The Controller File for the FXMLDocument View
 public class FXMLDocumentController implements Initializable {
 
     private Label label;
@@ -49,6 +50,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button btnstocks;
 
+    // Arrays to save coin prices
     Integer bitcoinVals[] = new Integer[10];
     Integer etherumVals[] = new Integer[10];
     Integer dogecoinVals[] = new Integer[10];
@@ -72,7 +74,9 @@ public class FXMLDocumentController implements Initializable {
     private Button btnPortfolio;
 
     @Override
+    // Initializes the View
     public void initialize(URL url, ResourceBundle rb) {
+        // sets the currency to USD, can be changed by the user later
         inputCurrency.setItems(FXCollections.observableArrayList(a, b, c));
         inputCurrency.setValue(a);
         currency = inputCurrency.getValue();
@@ -88,47 +92,61 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
+    // On click for the Bitcoin Button
     private void btnclickbitcoin(ActionEvent event) throws Exception {
         start();
 
     }
 
     @FXML
+    // On click for the Ethereum Button
     private void btnclickethereum(ActionEvent event) throws Exception {
 
         klicked(ETHEREUM);
     }
 
     @FXML
+    // On click for the Dogecoin Button
     private void btnclickdogecoin(ActionEvent event) throws Exception {
         klicked(DOGECOIN);
     }
 
     @FXML
+    // On click for the Stocks lookup Button
     private void btnclickstocks(ActionEvent event) throws Exception {
         stocks();
     }
 
+    // Not sure why this exists, but it works so i'll leave it here
     public void start() throws Exception {
         klicked(BITCOIN);
     }
 
+    // Updates the screen to the selected coin
+    // Is used by the onClick functions
     public void klicked(Coins coin) throws IOException, FileNotFoundException, ParseException, Exception {
+        // The amount of days we display data for
         int days = 5;
+        
+        // Check for Internetconnections
         if (DataHelper.ping()) {
             currentCoin = coin;
             chart.setVisible(true);
+            
+            // Init the Chart
             XYChart.Series<String, Number> databit = new XYChart.Series<>();
             databit.getData().removeAll(Collections.singleton(chart.getData().setAll()));
             Double vals[] = new Double[days];
             Double[] array = CryptoData.getDays(coin, currency, days);
 
+            // Get the data and display it in the chart
             for (int i = 0; i < days - 1; i++) {
                 Double val = array[i];
                 databit.getData().add(new XYChart.Data<>(String.valueOf(i), val));
                 vals[i] = val;
             }
-
+            
+            // Gets the current price and sets it into the chart
             Double latest = CryptoData.getCoin(coin, currency);
             databit.getData().add(new XYChart.Data<>(String.valueOf(days), latest));
             vals[days - 1] = latest;
@@ -150,12 +168,14 @@ public class FXMLDocumentController implements Initializable {
             chart.getData().add(databit);
             chart.setTitle(coin.cleanString(coin));
         } else {
+            // If ping returns false (Not going to happen, ping always returns true)
             chart.setTitle("No Internet");
             hideGains();
         }
     }
 
-    private void stocks() throws URISyntaxException, IOException, org.apache.hc.core5.http.ParseException, ParseException {
+    // Opens the Stock lookup window and closes this one
+    private void stocks() throws Exception{
         Parent root;
         String path = "Stocks.fxml";
         root = FXMLLoader.load(getClass().getResource(path));
@@ -170,11 +190,12 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
+    // Changes the currency to what the user changed it to
     private void inputCurrencyChange(ActionEvent event) throws Exception {
         currency = inputCurrency.getValue();
         klicked(currentCoin);
     }
-
+    
     private void hideGains() {
         up.setVisible(false);
         down.setVisible(false);
@@ -183,6 +204,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
+    // Opens the Portfolio window and closes this one
     private void btnclickportfolio(ActionEvent event) throws Exception {
         Parent root;
         String path = "Portfolio.fxml";

@@ -14,8 +14,9 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author kappe
+ * @author Florian Büchi & Simon Kappeler
  */
+// Controller file for the PortfolioForm View
 public class PortfolioFormController implements Initializable {
 
     @FXML
@@ -57,6 +58,7 @@ public class PortfolioFormController implements Initializable {
         cancel();
     }
 
+    // Adds a new Stock after pressing confirm
     private void confirm() throws Exception {
         try {
             String stock = inputStocksymbol.getText().toLowerCase();
@@ -69,6 +71,7 @@ public class PortfolioFormController implements Initializable {
         }
     }
 
+    // Closes the windos
     private void cancel() {
         Stage old = (Stage) btnConfirm.getScene().getWindow();
         old.close();

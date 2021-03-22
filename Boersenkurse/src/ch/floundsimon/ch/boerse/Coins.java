@@ -4,6 +4,9 @@ package ch.floundsimon.ch.boerse;
  *
  * @author Florian Büchi & Simon Kappeler
  */
+
+// Enum containing the Crypto-coins we support
+// makes programming a bit easier
 public enum Coins {
     BITCOIN,
     ETHEREUM,

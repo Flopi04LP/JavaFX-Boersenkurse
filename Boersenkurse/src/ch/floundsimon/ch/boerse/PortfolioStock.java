@@ -4,8 +4,9 @@ import org.json.simple.JSONObject;
 
 /**
  *
- * @author kappe
+ * @author Florian Büchi & Simon Kappeler
  */
+// Class to save stock data used for the portfolio into
 public class PortfolioStock {
     private String title;
     private Double amount;
@@ -17,6 +18,7 @@ public class PortfolioStock {
         this.price = price;
     }
     
+    // returns a json of the saved data
     public String getJson(){      
         JSONObject a = new JSONObject();
         a.put("title", title);
@@ -25,6 +27,7 @@ public class PortfolioStock {
         return a.toJSONString();
     }
 
+    // various getters
     public String getTitle() {
         return title;
     }

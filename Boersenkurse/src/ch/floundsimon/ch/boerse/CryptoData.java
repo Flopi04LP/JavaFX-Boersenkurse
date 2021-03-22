@@ -1,5 +1,6 @@
 package ch.floundsimon.ch.boerse;
 
+// Imports for JSON and Date formater things
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import org.json.simple.JSONObject;
  *
  * @author Florian Büchi & Simon Kappeler
  */
+// Model class for the FXMLDocument View
+// Provides data for current and historic crypto prices
 public class CryptoData {
 
     private static boolean alreadyGotPrice = false;
@@ -16,6 +19,7 @@ public class CryptoData {
     public static ArrayList<Double> btcArray = new ArrayList<>();
     public static String latestQueryCurrency = "none";
 
+    // Takes the data for current prices of all supportet currencies
     public static void getData(String currency) throws Exception {
         
         if (!alreadyGotPrice || currency != latestQueryCurrency ) {
@@ -47,6 +51,7 @@ public class CryptoData {
         } 
     }
 
+    // Gets historic data for a specific coin, for a set amount of days
     public static Double[] getDays(Coins coin, String currency, int days) throws Exception {
         Double array[] = new Double[days];
         LocalDate td = LocalDate.now();
@@ -72,6 +77,7 @@ public class CryptoData {
         return array;
     }
 
+    // returns the current price of one coin in one currency
     public static Double getCoin(Coins coin, String currency) throws Exception {
         getData(currency);
         switch (coin) {

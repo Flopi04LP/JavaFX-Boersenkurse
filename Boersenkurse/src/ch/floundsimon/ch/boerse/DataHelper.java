@@ -19,8 +19,10 @@ import org.json.simple.parser.JSONParser;
  *
  * @author Florian Büchi & Simon Kappeler
  */
+// Helper class for CryptoData and StocksData Models
 public class DataHelper {
 
+    // Makes an Api call to a given url and returns a string
     public static String makeApiCall(String url) throws Exception {
         // if (ping()) {
             String uri = url;
@@ -53,21 +55,24 @@ public class DataHelper {
         // }
     }
 
+    // Creates a JSONObject from a String
     public static JSONObject getJSONObject(String string) throws Exception {
         JSONParser parser = new JSONParser();
         return (JSONObject) parser.parse(string);
     }
 
+    // Returns the amount of gain or loss made from two values
     public static Double gains(Double nacher, Double vorher) {
         DecimalFormat df = new DecimalFormat("0.00");
         return Double.valueOf(df.format(calcPerc(nacher, vorher)));
     }
 
+    // Previously used to check for internet connection, not used anymore
     public static boolean ping() throws Exception {
         return true;
     }
 
-    // ----    
+    // Calculates the percentage in change between two values
     public static double calcPerc(double vorher, double nacher) {
         double b = Double.valueOf(vorher / nacher);
         double c = b * 100;
