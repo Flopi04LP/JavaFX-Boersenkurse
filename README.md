@@ -39,7 +39,7 @@ Done! If something doesn't work, you can leave an issue on this Github page
 We use the simple-json and httpClient Libraries.
 
 APIs used: 
-- https://finnhub.io
-- https://www.coingecko.com
+- https://finnhub.io            for stock data
+- https://www.coingecko.com     for crypto data
 
 thx yall, making my life a lil' easier 
