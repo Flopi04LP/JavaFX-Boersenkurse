@@ -55,13 +55,31 @@
   -fx-background-color:black;
 }
 
+/*stocks*/
 
-#inputCurrency{     
-  -fx-background-color:black;
-  -fx-border-width: 3;
-  -fx-border-color: white;
+#btnPortfolio:hover{     
+  -fx-text-fill:orange;
+  
+}
+#btnPortfolio:pressed{     
+  -fx-text-fill:orange;
   
 }
 
+#btnPortfolio{     
+  -fx-background-color:black;
+}
+/*stocks*/
 
+#btnadd:hover{     
+  -fx-text-fill:white;
+  
+}
+#btnadd:pressed{     
+  -fx-text-fill:white;
+  
+}
 
+#btnadd{     
+  -fx-background-color:black;
+}

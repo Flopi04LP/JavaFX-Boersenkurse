@@ -40,15 +40,12 @@ public class PortfolioData {
         ArrayList<String> array = new ArrayList<>();
         InputStream input = new FileInputStream(filename);
         props.load(input);
-        int i = 0;
         Enumeration a = props.keys();
 
         while (a.hasMoreElements()) {
             String str = (String) a.nextElement();
             array.add(str);
-            i++;
         }
-
         return array;
     }
 }

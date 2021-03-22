@@ -68,14 +68,14 @@ public class FXMLDocumentController implements Initializable {
     String b = "eur";
     String c = "chf";
     Coins currentCoin = BITCOIN;
-    
+    @FXML
+    private Button btnPortfolio;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         inputCurrency.setItems(FXCollections.observableArrayList(a, b, c));
         inputCurrency.setValue(a);
         currency = inputCurrency.getValue();
-        
         try {
             start();
         } catch (IOException ex) {
@@ -114,42 +114,42 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void klicked(Coins coin) throws IOException, FileNotFoundException, ParseException, Exception {
-        int days = 30;
-        if(DataHelper.ping()){
-        currentCoin = coin;
-        chart.setVisible(true);
-        XYChart.Series<String, Number> databit = new XYChart.Series<>();
-        databit.getData().removeAll(Collections.singleton(chart.getData().setAll()));
-        Double vals[] = new Double[days+1];
-        Double[] array = CryptoData.getDays(coin, currency, days);
+        int days = 5;
+        if (DataHelper.ping()) {
+            currentCoin = coin;
+            chart.setVisible(true);
+            XYChart.Series<String, Number> databit = new XYChart.Series<>();
+            databit.getData().removeAll(Collections.singleton(chart.getData().setAll()));
+            Double vals[] = new Double[days];
+            Double[] array = CryptoData.getDays(coin, currency, days);
 
-        for (int i = 0; i < days; i++) {
-            Double val = array[i];
-            databit.getData().add(new XYChart.Data<>(String.valueOf(i), val));
-            vals[i] = val;
-        }
+            for (int i = 0; i < days - 1; i++) {
+                Double val = array[i];
+                databit.getData().add(new XYChart.Data<>(String.valueOf(i), val));
+                vals[i] = val;
+            }
 
-        Double latest = CryptoData.getCoin(coin, currency);
-        databit.getData().add(new XYChart.Data<>(String.valueOf(6), latest));
-        vals[days] = latest;
-        price.setText(String.valueOf(latest) + "  " + currency.toUpperCase());
+            Double latest = CryptoData.getCoin(coin, currency);
+            databit.getData().add(new XYChart.Data<>(String.valueOf(days), latest));
+            vals[days - 1] = latest;
+            price.setText(String.valueOf(latest) + "  " + currency.toUpperCase());
 
-        // gainsPerc = Double.valueOf(df.format(calcPerc(vals[5], vals[4])));
-        gainsPerc = DataHelper.gains(vals[days], vals[days-1]);
+            // gainsPerc = Double.valueOf(df.format(calcPerc(vals[5], vals[4])));
+            gainsPerc = DataHelper.gains(vals[days - 1], vals[days - 2]);
 
-        if (gainsPerc > 0) {
-            gains.setText(String.valueOf("+ " + gainsPerc + "%"));
-            up.setVisible(true);
-            down.setVisible(false);
+            if (gainsPerc > 0) {
+                gains.setText(String.valueOf("+ " + gainsPerc + "%"));
+                up.setVisible(true);
+                down.setVisible(false);
+            } else {
+                gains.setText(String.valueOf(gainsPerc + "%"));
+                up.setVisible(false);
+                down.setVisible(true);
+            }
+
+            chart.getData().add(databit);
+            chart.setTitle(coin.cleanString(coin));
         } else {
-            gains.setText(String.valueOf(gainsPerc + "%"));
-            up.setVisible(false);
-            down.setVisible(true);
-        }
-
-        chart.getData().add(databit);
-        chart.setTitle(coin.cleanString(coin));
-        } else{
             chart.setTitle("No Internet");
             hideGains();
         }
@@ -174,11 +174,26 @@ public class FXMLDocumentController implements Initializable {
         currency = inputCurrency.getValue();
         klicked(currentCoin);
     }
-    
-    private void hideGains(){
+
+    private void hideGains() {
         up.setVisible(false);
         down.setVisible(false);
         gains.setVisible(false);
         inputCurrency.setVisible(false);
+    }
+
+    @FXML
+    private void btnclickportfolio(ActionEvent event) throws Exception {
+        Parent root;
+        String path = "Portfolio.fxml";
+        root = FXMLLoader.load(getClass().getResource(path));
+        Stage stage = new Stage();
+        Stage old = (Stage) chart.getScene().getWindow();
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+
+        stage.show();
+        old.close();
     }
 }

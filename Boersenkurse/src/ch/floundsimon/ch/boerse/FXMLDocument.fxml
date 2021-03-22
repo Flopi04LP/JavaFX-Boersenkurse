@@ -45,6 +45,11 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
+            <Button fx:id="btnPortfolio" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#btnclickportfolio" prefHeight="53.0" prefWidth="109.0" text="Portfolio" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
       <VBox layoutX="14.0" layoutY="20.0" prefHeight="526.0" prefWidth="32.0" AnchorPane.topAnchor="20.0">
@@ -84,6 +89,16 @@
                   <Image url="@pics/icons8_stocks_32px.png" />
                </image>
             </ImageView>
+            <Label prefHeight="13.0" prefWidth="18.0">
+               <font>
+                  <Font size="1.0" />
+               </font>
+            </Label>
+            <ImageView>
+               <image>
+                  <Image url="@pics/icons8_bank_building_32px.png" />
+               </image>
+            </ImageView>
          </children>
          <opaqueInsets>
             <Insets />
@@ -109,6 +124,6 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <ComboBox id="inputCurrency" fx:id="inputCurrency" layoutX="751.0" layoutY="14.0" onAction="#inputCurrencyChange" prefWidth="150.0" promptText="Currency" stylesheets="@buttons.css" visibleRowCount="5" />
+      <ComboBox fx:id="inputCurrency" layoutX="751.0" layoutY="14.0" onAction="#inputCurrencyChange" opacity="0.44" prefWidth="150.0" promptText="Currency" visibleRowCount="5" />
    </children>
 </AnchorPane>

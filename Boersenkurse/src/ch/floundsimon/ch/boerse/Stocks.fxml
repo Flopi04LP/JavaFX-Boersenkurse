@@ -64,7 +64,7 @@
          </image>
       </ImageView>
       <TextField fx:id="inputbox" layoutX="273.0" layoutY="73.0" prefHeight="31.0" prefWidth="247.0" />
-      <Label layoutX="271.0" layoutY="26.0" text="Search" textFill="#f5f5f5">
+      <Label fx:id="e" layoutX="271.0" layoutY="26.0" text="Search" textFill="#f5f5f5">
          <font>
             <Font size="32.0" />
          </font>
@@ -80,9 +80,9 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="271.0" layoutY="400.0" text="Low of the day" textFill="WHITE" />
-      <Label layoutX="485.0" layoutY="400.0" text="High of the day" textFill="WHITE" />
-      <Label layoutX="724.0" layoutY="400.0" text="Previous close" textFill="WHITE" />
+      <Label fx:id="a" layoutX="271.0" layoutY="400.0" text="Low of the day" textFill="WHITE" />
+      <Label fx:id="b" layoutX="485.0" layoutY="400.0" text="High of the day" textFill="WHITE" />
+      <Label fx:id="c" layoutX="724.0" layoutY="400.0" text="Previous close" textFill="WHITE" />
       <Label fx:id="lowoftheday" layoutX="271.0" layoutY="433.0" prefHeight="21.0" prefWidth="94.0" textFill="WHITE" />
       <Label fx:id="highoftheday" layoutX="490.0" layoutY="433.0" prefHeight="21.0" prefWidth="94.0" textFill="WHITE" />
       <Label fx:id="previousclose" layoutX="724.0" layoutY="433.0" prefHeight="21.0" prefWidth="94.0" textFill="WHITE" />

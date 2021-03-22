@@ -2,7 +2,7 @@ package ch.floundsimon.ch.boerse;
 
 /**
  *
- * @author kappe
+ * @author Florian Büchi & Simon Kappeler
  */
 public enum Coins {
     BITCOIN,
