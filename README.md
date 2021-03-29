@@ -22,7 +22,7 @@ Missing featuress:
 
 ----
 Status:
-- in development
+- not finished, not working on it anymore
 
 ---
 
